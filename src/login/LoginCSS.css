@@ -1,0 +1,123 @@
+/* Wrapper per il login */
+:host {
+  display: flex;
+  justify-content: center; /* centra orizzontalmente */
+  align-items: center;     /* centra verticalmente */
+  height: 100vh;           /* altezza totale della viewport */
+  width: 100%;
+  background-color: #f0f2f5;
+}
+
+/* Contenitore del form */
+.login {
+  background-color: #ffffff;
+  padding: 40px 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  box-sizing: border-box;
+  text-align: center;
+
+  /* Animazione di entrata */
+  transform: translateY(-20px);
+  opacity: 0;
+  animation: fadeIn 0.5s forwards;
+}
+
+/* Animazione fade in */
+@keyframes fadeIn {
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Titolo */
+.login h2 {
+  margin-bottom: 25px;
+  color: #333;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+/* Gruppi di input */
+.form {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+/* Label */
+.form label {
+  display: block;
+  margin-bottom: 6px;
+  color: #555;
+  font-weight: 500;
+}
+
+/* Input */
+.form input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  box-sizing: border-box;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+/* Input focus */
+.form input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
+  outline: none;
+}
+
+/* Pulsante login */
+button[type="submit"] {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  background-color: #007bff;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 10px;
+}
+
+/* Hover sul pulsante */
+button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+/* Pulsante disabilitato */
+button[disabled] {
+  background-color: #a0c5f7;
+  cursor: not-allowed;
+}
+
+/* Messaggi di errore */
+.error {
+  color: #d93025;
+  font-size: 13px;
+  margin-top: 5px;
+}
+
+/* Messaggio errore globale */
+.error-msg {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  font-size: 14px;
+  text-align: center;
+}
+
+/* Placeholder input più chiaro */
+input::placeholder {
+  color: #aaa;
+}
