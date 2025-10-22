@@ -1,0 +1,98 @@
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+  flex-grow: 1;
+}
+
+.register-container {
+  background-color: #ffffff;
+  padding: 30px 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+h2 {
+  color: #1a2a4d;
+  margin-bottom: 25px;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+form div {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+  color: #555;
+  font-size: 0.9rem;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #d1d9e6;
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-size: 1rem;
+  background-color: #f8faff;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+/* Stile per i messaggi di errore */
+form div div {
+  margin-top: 5px;
+  margin-bottom: 0;
+}
+
+small {
+  color: #dc3545;
+  font-size: 0.8rem;
+}
+
+/* Stile specifico per l'input 'ruolo' readonly */
+input[formControlName="ruolo"] {
+  background-color: #e9ecef;
+  cursor: not-allowed;
+}
+
+
+button[type="submit"] {
+  background-color: #007bff; /* Blu primario */
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: 500;
+  width: 100%; /* Pulsante a larghezza piena */
+  margin-top: 15px; /* Spazio sopra il pulsante */
+  transition: background-color 0.2s ease;
+}
+
+button[type="submit"]:hover:not(:disabled) {
+  background-color: #0056b3; /* Blu più scuro al passaggio del mouse */
+}
+
+button[type="submit"]:disabled {
+   background-color: #6c757d; /* Grigio per pulsante disabilitato */
+   cursor: not-allowed;
+   opacity: 0.7;
+}
