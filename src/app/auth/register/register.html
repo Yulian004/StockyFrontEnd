@@ -1,0 +1,81 @@
+<div class="register-container">
+  <h2>Registrazione</h2>
+
+  @if (successMessage) {
+    <div class="alert alert-success">
+      {{ successMessage }}
+    </div>
+  }
+
+  @if (errorMessage) {
+    <div class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+  }
+
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <div>
+      <label for="nome">Nome:</label>
+      <input id="nome" type="text" formControlName="nome" required placeholder="Mario">
+      @if (registerForm.get('nome')?.invalid && (registerForm.get('nome')?.dirty || registerForm.get('nome')?.touched)) {
+        <div>
+          @if (registerForm.get('nome')?.errors?.['required']) {
+            <small>Il nome è obbligatorio.</small>
+          }
+        </div>
+      }
+    </div>
+
+    <div>
+      <label for="cognome">Cognome:</label>
+      <input id="cognome" type="text" formControlName="cognome" required placeholder="Rossi">
+      @if (registerForm.get('cognome')?.invalid && (registerForm.get('cognome')?.dirty || registerForm.get('cognome')?.touched)) {
+        <div>
+          @if (registerForm.get('cognome')?.errors?.['required']) {
+            <small>Il cognome è obbligatorio.</small>
+          }
+        </div>
+      }
+    </div>
+
+    <div>
+      <label for="email">Email:</label>
+      <input id="email" type="email" formControlName="email" required email placeholder="mario.rossi@email.com">
+      @if (registerForm.get('email')?.invalid && (registerForm.get('email')?.dirty || registerForm.get('email')?.touched)) {
+        <div>
+          @if (registerForm.get('email')?.errors?.['required']) {
+            <small>L'email è obbligatoria.</small>
+          }
+          @if (registerForm.get('email')?.errors?.['email']) {
+            <small>Inserisci un'email valida.</small>
+          }
+        </div>
+      }
+    </div>
+
+    <div>
+      <label for="password">Password:</label>
+      <input id="password" type="password" formControlName="password" required placeholder="********">
+      @if (registerForm.get('password')?.invalid && (registerForm.get('password')?.dirty || registerForm.get('password')?.touched)) {
+        <div class="error-messages"> @if (registerForm.get('password')?.errors?.['required']) {
+          <small>La password è obbligatoria.</small><br>
+        }
+          @if (registerForm.get('password')?.errors?.['minlength']) {
+            <small>La password deve essere lunga almeno 8 caratteri.</small><br>
+          }
+          @if (registerForm.get('password')?.errors?.['pattern']) {
+            <small>La password deve contenere almeno una maiuscola, una minuscola, un numero e un carattere speciale (&#64;$!%*?&.,;).</small>
+          }
+        </div>
+      }
+    </div>
+    <div>
+      <label for="ruolo">Ruolo:</label>
+      <input id="ruolo" type="text" formControlName="ruolo" readonly>
+    </div>
+
+    <button type="submit" [disabled]="!registerForm.valid || isLoading">
+      {{ isLoading ? 'Registrazione in corso...' : 'Registrati' }}
+    </button>
+  </form>
+</div>
