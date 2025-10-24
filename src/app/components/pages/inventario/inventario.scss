@@ -1,0 +1,120 @@
+.inventory-page {
+  padding: 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+  font-family: 'Segoe UI', sans-serif;
+  background: #fafafa;
+
+  .inventory-header {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 24px;
+
+    h2 {
+      font-size: 1.8rem;
+      margin: 0;
+      color: #222;
+    }
+
+    .subtitle {
+      color: #666;
+      font-size: 0.95rem;
+    }
+
+    .actions {
+      margin-top: 12px;
+      display: flex;
+      gap: 10px;
+
+      .btn-primary,
+      .btn-secondary {
+        border: none;
+        padding: 8px 14px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        transition: background 0.2s ease;
+      }
+
+      .btn-primary {
+        background: #1976d2;
+        color: white;
+
+        &:hover {
+          background: #1565c0;
+        }
+      }
+
+      .btn-secondary {
+        background: #e0e0e0;
+        color: #333;
+
+        &:hover {
+          background: #d5d5d5;
+        }
+      }
+    }
+  }
+
+  .inventory-table {
+    background: white;
+    border-radius: 8px;
+    overflow-x: auto;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+
+      thead {
+        background: #f5f5f5;
+
+        th {
+          text-align: left;
+          padding: 12px;
+          font-weight: 600;
+          color: #333;
+          border-bottom: 2px solid #ddd;
+        }
+      }
+
+      tbody {
+        tr {
+          border-bottom: 1px solid #eee;
+          transition: background 0.2s;
+
+          &:hover {
+            background: #f9f9f9;
+          }
+
+          td {
+            padding: 12px;
+            color: #555;
+            font-size: 0.95rem;
+          }
+        }
+      }
+    }
+
+    .status {
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: white;
+
+      &.in-stock {
+        background: #43a047;
+      }
+
+      &.low-stock {
+        background: #f9a825;
+      }
+
+      &.out-stock {
+        background: #e53935;
+      }
+    }
+  }
+}

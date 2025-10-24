@@ -1,0 +1,51 @@
+.notifications-page {
+  padding: 24px;
+  max-width: 700px;
+  margin: 0 auto;
+  font-family: 'Segoe UI', sans-serif;
+
+  header {
+    margin-bottom: 24px;
+    h2 {
+      margin: 0 0 4px 0;
+      font-size: 1.8rem;
+      color: #222;
+    }
+    .subtitle {
+      color: #666;
+      font-size: 0.95rem;
+    }
+  }
+
+  .notifications-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .notification {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+
+    h3 {
+      margin: 0 0 6px 0;
+      font-size: 1.1rem;
+      color: #333;
+    }
+
+    p {
+      margin: 0 0 8px 0;
+      color: #555;
+      font-size: 0.95rem;
+      line-height: 1.4;
+    }
+
+    small {
+      color: #999;
+      font-size: 0.8rem;
+    }
+  }
+}
