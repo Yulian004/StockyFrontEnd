@@ -11,7 +11,7 @@ export interface UserData {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root' // Rende il servizio disponibile a livello globale
 })
 export class AuthService {
 
