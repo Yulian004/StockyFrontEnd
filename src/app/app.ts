@@ -1,6 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { RouterOutlet, Router } from '@angular/router';
-import {Navbar} from './components/parts/navbar/navbar';
+import {Navbar} from './componentsUser/parts/navbar/navbar';
 
 
 

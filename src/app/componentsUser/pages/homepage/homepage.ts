@@ -4,8 +4,9 @@ import { Component } from '@angular/core';
   selector: 'app-homepage',
   imports: [],
   templateUrl: './homepage.html',
-  styleUrl: './homepage.css'
+  styleUrl: './homepage.scss'
 })
 export class Homepage {
 
 }
+
