@@ -77,6 +77,7 @@ export class LoginComponent {
   }
 }
 
+// TODO
 /*
 DA METTERE PUOI DENTRO LA PAGINE PROTETTE!!!
 logout() {

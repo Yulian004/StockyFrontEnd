@@ -6,11 +6,9 @@ export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomepageComponent }
+
+  // TODO
   /*
-    Dopo aver creato le pagine ricorda di togliere da commento
-  { path: 'admin', component: AdminPageComponent },
-  { path: 'superuser', component: SuperUserPageComponent },
-  { path: 'user', component: UserPageComponent },
    {
     path: 'admin',
     component: AdminPageComponent,
