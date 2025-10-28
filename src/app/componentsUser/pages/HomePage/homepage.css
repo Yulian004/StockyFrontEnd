@@ -1,0 +1,180 @@
+/* ===== HEADER ===== */
+.main-header {
+  background: linear-gradient(135deg, #00b4d8, #0077b6);
+  color: #fff;
+  padding: 2.5rem 1rem;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.main-header h1 {
+  font-size: 2.6rem;
+  font-weight: 700;
+}
+
+.main-header h1 span {
+  color: #90e0ef;
+}
+
+.main-header p {
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
+/* ===== SEZIONI PRINCIPALI ===== */
+.content-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.login-section img {
+  display: block;
+  max-width: 80%;      /* impedisce che l’immagine strabordi */
+  height: auto;         /* mantiene le proporzioni originali */
+  border-radius: 12px;  /* leggero arrotondamento coerente con la card */
+  margin: 1.5rem auto 0; /* centra e distanzia dall’alto */
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.content-box {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  padding: 2rem;
+  color: #fff;
+  flex: 1 1 400px;
+  max-width: 600px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.content-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+}
+
+.content-box h2 {
+  color: #caf0f8;
+  margin-bottom: 1rem;
+}
+
+/* ===== NEWS CAROUSEL ===== */
+.news-section {
+  text-align: center;
+}
+
+#newsCarousel {
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 1rem;
+}
+
+/* Caption stile vetro */
+.custom-caption {
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 12px;
+  padding: 15px 25px;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  animation: fadeInUp 0.8s ease;
+}
+
+.custom-caption h5 {
+  color: #023e8a;
+  font-weight: 700;
+  margin-bottom: 5px;
+  font-size: 1.4rem;
+}
+
+.custom-caption p {
+  color: #333;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* ===== Footer ===== */
+footer {
+  background-color: #1a1a1a;
+  color: #f0f0f0;
+  padding: 40px 20px;
+  line-height: 1.6;
+  font-family: Arial, sans-serif;
+}
+
+footer > div {
+  margin-bottom: 20px;
+}
+
+footer h3, footer h4 {
+  margin-bottom: 10px;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+footer a {
+  color: #00b4d8;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+footer a:hover {
+  color: #0096c7;
+  text-decoration: underline;
+}
+
+@media (min-width: 768px) {
+  footer {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  footer > div {
+    flex: 1 1 200px;
+    margin-bottom: 0;
+  }
+}
+
+footer > div:last-child {
+  text-align: center;
+  flex-basis: 100%;
+  margin-top: 20px;
+  font-size: 0.9rem;
+  color: #bbb;
+}
+
+/* ===== Bottone ===== */
+a[routerLink], .login-btn {
+  display: block;            /* da inline-block a block */
+  width: fit-content;        /* la larghezza segue il contenuto */
+  margin: 1rem auto;         /* centra orizzontalmente */
+  background: #00b4d8;
+  color: #fff;
+  text-decoration: none;
+  padding: 0.8rem 1.8rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+a[routerLink]:hover, .login-btn:hover {
+  background: #0096c7;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
+}

@@ -1,10 +1,12 @@
 import { Component, inject, signal } from '@angular/core';
 import { RouterOutlet, Router } from '@angular/router';
+import {Navbar} from './componentsUser/parts/navbar/navbar';
+
 
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet ],
+  imports: [RouterOutlet, Navbar],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
@@ -18,4 +20,7 @@ export class App {
      this.router.navigate(['/register']);
   }
 
+}
+
+export class AppComponent {
 }

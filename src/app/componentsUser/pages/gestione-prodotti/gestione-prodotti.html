@@ -1,0 +1,54 @@
+<section class="gestione-prodotti">
+  <header class="page-header">
+    <div class="title">
+      <h2>Gestione Prodotti</h2>
+      <p class="subtitle">Visualizza, aggiungi o rimuovi prodotti dal catalogo.</p>
+    </div>
+
+    <div class="controls">
+      <input
+        class="search"
+        type="text"
+        placeholder="Cerca prodotto per nome o categoria..."
+      />
+      <select class="category-filter">
+        <option value="">Tutte le categorie</option>
+        <option value="tech">Tecnologia</option>
+        <option value="arredo">Arredo</option>
+        <option value="abbigliamento">Abbigliamento</option>
+      </select>
+      <button class="btn-primary">+ Aggiungi prodotto</button>
+    </div>
+  </header>
+
+  <main class="product-table-wrap">
+    <table class="product-table">
+      <thead>
+      <tr>
+        <th class="col-id">ID</th>
+        <th class="col-name">Nome</th>
+        <th class="col-category">Categoria</th>
+        <th class="col-price">Prezzo</th>
+        <th class="col-stock">Disponibilità</th>
+        <th class="col-actions">Azioni</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <!-- I prodotti saranno caricati dinamicamente dal backend -->
+      <tr *ngIf="false">
+        <td colspan="6" class="empty">Nessun prodotto disponibile</td>
+      </tr>
+      </tbody>
+    </table>
+
+    <div class="table-footer">
+      <div class="rows-info">Mostrati 0 prodotti</div>
+      <div class="pagination">
+        <button class="page">&lt;</button>
+        <button class="page active">1</button>
+        <button class="page">&gt;</button>
+      </div>
+    </div>
+  </main>
+</section>

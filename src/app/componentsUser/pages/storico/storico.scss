@@ -1,0 +1,120 @@
+.history-page {
+  padding: 24px;
+  max-width: 900px;
+  margin: 0 auto;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #fafafa;
+
+  .history-header {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 24px;
+
+    h2 {
+      margin: 0;
+      font-size: 1.8rem;
+      color: #222;
+    }
+
+    .subtitle {
+      color: #666;
+      font-size: 0.95rem;
+    }
+
+    .filters {
+      margin-top: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+
+      select {
+        padding: 6px 10px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        font-size: 0.9rem;
+        background-color: white;
+        cursor: pointer;
+      }
+
+      .btn-secondary {
+        background: #e0e0e0;
+        color: #333;
+        border: none;
+        padding: 8px 14px;
+        border-radius: 6px;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: background 0.2s;
+
+        &:hover {
+          background: #d5d5d5;
+        }
+      }
+    }
+  }
+
+  .history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .history-item {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+    position: relative;
+
+    .item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+
+      h3 {
+        margin: 0;
+        font-size: 1.1rem;
+        color: #333;
+      }
+
+      .date {
+        color: #888;
+        font-size: 0.85rem;
+      }
+    }
+
+    p {
+      margin: 0 0 8px 0;
+      color: #555;
+      font-size: 0.95rem;
+      line-height: 1.4;
+    }
+
+    .tag {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 4px 8px;
+      border-radius: 4px;
+      color: white;
+
+      &.success {
+        background: #43a047;
+      }
+
+      &.info {
+        background: #1976d2;
+      }
+
+      &.danger {
+        background: #e53935;
+      }
+    }
+  }
+}

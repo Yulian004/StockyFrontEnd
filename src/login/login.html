@@ -1,0 +1,48 @@
+<div class="login">
+
+  <h2> LOGIN </h2>
+  <form (ngSubmit)="onLogin()" #loginForm="ngForm">
+    <div class="form">
+      <label for="UTENTE"> UTENTE </label>
+      <input
+        type="text"
+        id = "user"
+        name="user"
+        [(ngModel)]="user"
+        required
+        placeholder = "Inserire nome utente"
+      />
+      @if (loginForm.submitted && !user) {
+      <div class="error">
+        NOME UTENTE OBBLIGATORIO
+      </div>
+    }
+    </div>
+
+    <div class="form">
+      <label for="password"> PASSWORD </label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        [(ngModel)]="password"
+        required
+        placeholder="••••••••"
+      >
+      @if (loginForm.submitted && !password) {
+        <div class="error">
+          PASSWORD OBBLIGATORIA
+        </div>
+      }
+    </div>
+
+    @if (errorMessage) {
+      <div class="error-msg">{{ errorMessage }}</div>
+    }
+    <button type="submit" [disabled]="loading">
+      {{ loading ? "Accesso..." : "Login" }}
+    </button>
+
+  </form>
+
+</div>

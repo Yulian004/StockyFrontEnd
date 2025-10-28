@@ -1,0 +1,62 @@
+/* Stile generale della navbar */
+.navbar {
+  background-color: #1e1e1e;
+  padding: 0.8rem 2rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  font-family: 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Container per gli elementi */
+.navbar-nav {
+  display: flex;
+  justify-content: space-evenly; /* Distribuisce equamente */
+  align-items: center;
+  width: 100%;
+}
+
+/* Link principali */
+.nav-link {
+  color: #ddd !important;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  text-transform: capitalize;
+  letter-spacing: 0.5px;
+  padding: 0.5rem 1rem !important;
+}
+
+/* Hover e attivo */
+.nav-link:hover,
+.nav-link.active {
+  color: #fff !important;
+  background-color: #343a40;
+  border-radius: 8px;
+}
+
+/* Brand (Logo) */
+.navbar-brand {
+  font-weight: bold;
+  font-size: 1.3rem;
+  color: #ffffff !important;
+  letter-spacing: 1px;
+}
+
+/* Toggler per mobile */
+.navbar-toggler {
+  border-color: #666;
+}
+
+/* Navbar su schermi piccoli */
+@media (max-width: 991px) {
+  .navbar-nav {
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .nav-link {
+    width: 100%;
+    text-align: center;
+    margin: 0.2rem 0;
+  }
+}
+
