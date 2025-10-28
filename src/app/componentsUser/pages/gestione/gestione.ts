@@ -1,11 +1,14 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
 
 @Component({
   selector: 'app-gestione',
+  standalone: true,
   imports: [],
   templateUrl: './gestione.html',
-  styleUrl: './gestione.css'
+  styleUrls: ['./gestione.scss']
 })
-export class Gestione {
+export class GestioneComponent {}
 
-}

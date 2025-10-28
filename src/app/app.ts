@@ -21,3 +21,6 @@ export class App {
   }
 
 }
+
+export class AppComponent {
+}
