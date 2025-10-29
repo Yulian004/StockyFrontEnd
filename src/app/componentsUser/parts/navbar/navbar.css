@@ -2,7 +2,7 @@
 .navbar {
   background-color: #1e1e1e;
   padding: 0.8rem 2rem;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 5px rgba(34, 23, 27, 0.3);
   font-family: 'Segoe UI', Roboto, sans-serif;
 }
 
@@ -21,9 +21,11 @@
   font-size: 1rem;
   transition: all 0.3s ease;
   text-transform: capitalize;
-  letter-spacing: 0.5px;
+  letter-spacing: 1px;
   padding: 0.5rem 1rem !important;
 }
+
+
 
 /* Hover e attivo */
 .nav-link:hover,

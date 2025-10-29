@@ -1,9 +1,13 @@
+@if (showNewMessageModal) {
+  <app-nuovo-messaggio (closeModal)="closeNewMessageModal()"></app-nuovo-messaggio>
+}
 <section class="messages-page">
   <!-- Sidebar -->
   <aside class="sidebar">
-    <button class="compose-btn">+ Nuovo Messaggio</button>
+    <button class="compose-btn" (click)="openNewMessage()">+ Nuovo Messaggio</button>
     <ul class="menu">
-      <li class="active">Posta in arrivo</li>
+      <li (click)="setView('notifications')" [class.active]="view === 'notifications'">Notifiche</li>
+      <li (click)="setView('inbox')" [class.active]="view === 'inbox'">Posta in arrivo</li>
       <li>Inviati</li>
       <li>Bozze</li>
       <li>Spam</li>
@@ -11,43 +15,69 @@
     </ul>
   </aside>
 
-  <!-- Elenco messaggi -->
-  <main class="message-list">
+  <!-- Contenuto centrale -->
+  <main class="message-list" [style.grid-column]="view === 'notifications' ? '2 / 4' : '2 / 3'">
     <header class="list-header">
-      <h2>Posta in arrivo</h2>
-      <input type="text" placeholder="Cerca nei messaggi..." />
+      @if (view === 'inbox') {
+        <h2>Posta in arrivo</h2>
+        <input type="text" placeholder="Cerca nei messaggi..." />
+      } @else if (view === 'notifications') {
+        <h2>Notifiche</h2>
+      }
     </header>
 
-    <ul class="messages">
-      <li class="message unread">
-        <div class="sender">Mario Rossi</div>
-        <div class="subject">Aggiornamento ordine <span>- Il tuo ordine è stato spedito</span></div>
-        <div class="time">10:15</div>
-      </li>
-      <li class="message">
-        <div class="sender">Anna Bianchi</div>
-        <div class="subject">Riunione confermata <span>- Domani ore 9:00</span></div>
-        <div class="time">Ieri</div>
-      </li>
-      <li class="message">
-        <div class="sender">Supporto</div>
-        <div class="subject">Benvenuto nel nostro servizio <span>- Attiva il tuo account</span></div>
-        <div class="time">22 ott</div>
-      </li>
-    </ul>
+    <!-- Lista messaggi -->
+    @if (view === 'inbox') {
+      <ul class="messages">
+        @for (msg of messages; track msg) {
+          <li
+            class="message"
+            [class.unread]="msg.unread"
+            (click)="selectMessage(msg)">
+            <div class="sender">{{ msg.sender }}</div>
+            <div class="subject">{{ msg.subject }}</div>
+            <div class="time">{{ msg.time }}</div>
+          </li>
+        }
+      </ul>
+    }
+
+    <!-- Filtro notifiche -->
+    @if (view === 'notifications') {
+      <div class="notif-filter">
+        <button [class.active]="notifFilter === 'all'" (click)="setFilter('all')">Tutte</button>
+        <button [class.active]="notifFilter === 'unread'" (click)="setFilter('unread')">Non lette</button>
+        <button [class.active]="notifFilter === 'read'" (click)="setFilter('read')">Lette</button>
+      </div>
+
+      <!-- Lista notifiche filtrata -->
+      <ul class="messages">
+        @for (notif of filteredNotifications; track notif) {
+          <li class="message" [class.unread]="!notif.read">
+            <div class="sender">{{ notif.title }}</div>
+            <div class="subject">{{ notif.description }}</div>
+            <div class="time">{{ notif.time }}</div>
+            <button class="read-toggle" (click)="toggleRead(notif)">
+              {{ notif.read ? '✔️' : '❗' }}
+            </button>
+          </li>
+        }
+      </ul>
+    }
   </main>
 
   <!-- Anteprima messaggio -->
-  <aside class="message-preview">
-    <header>
-      <h3>Aggiornamento ordine</h3>
-      <span class="from">Da: Mario Rossi &lt;mario.rossi@email.com&gt;</span>
-      <span class="date">24 ottobre 2025 - 10:15</span>
-    </header>
+  @if (view === 'inbox' && selectedMessage) {
+    <aside class="message-preview">
+      <header>
+        <h3>{{ selectedMessage.subject }}</h3>
+        <span class="from">Da: {{ selectedMessage.sender }}</span>
+        <span class="date">{{ selectedMessage.time }}</span>
+      </header>
 
-    <div class="content">
-      <p>Ciao! Ti informiamo che il tuo ordine #1024 è stato spedito oggi e arriverà entro 2 giorni lavorativi.</p>
-      <p>Grazie per aver scelto il nostro servizio!</p>
-    </div>
-  </aside>
+      <div class="content">
+        <p>{{ selectedMessage.content }}</p>
+      </div>
+    </aside>
+  }
 </section>
