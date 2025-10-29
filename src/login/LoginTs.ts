@@ -48,25 +48,9 @@ export class LoginComponent {
           localStorage.setItem('userRole', role);
           localStorage.setItem('token', token); // **
 
-
-          // Naviga alla pagina corretta in base al ruolo (Me serve er nome del ruolo)
-          switch (role) {
-            case 'Admin':
-              alert('Login effettuato con successo ✅');
-              this.router.navigate(['/AdminDeiPiedi']);
-              break;
-            case 'SuperUser':
-              alert('Login effettuato con successo ✅');
-              this.router.navigate(['/PaginaDelSuperUser']);
-              break;
-            case 'User':
-              alert('Login effettuato con successo ✅');
-              this.router.navigate(['/PaginaDelloUser']);
-              break;
-            default:
-              this.errorMessage = 'Utente non riconosciuto.';
-          }
-
+          alert('Login effettuato con successo ✅');
+          this.router.navigate(['/dashboard']);
+          
           this.loading = false;
         },
         error: (err) => {

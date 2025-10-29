@@ -1,11 +1,25 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from '../login/LoginTs';
 import { HomepageComponent } from '../homepage/HomepageTS';
+import { DashboardComponent } from '../dashboard/dashboard';
+import {Messaggi} from '../messaggi/messaggi';
+import {Storico} from '../storico/storico';
+import {RegisterComponent} from '../auth/register/register';
+
+
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
-  { path: 'home', component: HomepageComponent }
+  { path: 'home', component: HomepageComponent },
+  { path: 'dashboard', component: DashboardComponent },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: 'messaggi', component: Messaggi },
+  { path: 'storico', component: Storico },
+  { path: 'gestione', component: RegisterComponent },
+
+
+
 
   // TODO
   /*
