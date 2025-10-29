@@ -1,0 +1,84 @@
+<div class="dashboard-container">
+  <h2>Benvenuto in Stocky!</h2>
+  <app-navbar [role]="role"></app-navbar>
+
+  @if (role === 'Admin') {
+    <section>
+      <h3>Area Amministratore</h3>
+      <p>Puoi gestire utenti, impostazioni e prodotti</p>
+    </section>
+  } @else if (role === 'Supervisore') {
+    <section>
+      <h3>Area Supervisore</h3>
+      <p>Puoi monitorare attività e modificare prodotti</p>
+    </section>
+  } @else if (role === 'User') {
+    <section>
+      <h3>Area Utente</h3>
+      <p>Benvenuto! Puoi visualizzare i prodotti</p>
+    </section>
+  } @else {
+    <section>
+      <h3>Nessun ruolo riconosciuto</h3>
+      <p>Non hai i permessi per accedere a questa sezione.</p>
+    </section>
+  }
+
+  @if (role === 'Admin' || role === 'Supervisore' || role === 'User') {
+    <section class="inventory-page">
+      <header class="inventory-header">
+        <h2>Inventario</h2>
+        <p class="subtitle">Gestione e visualizzazione dei prodotti in magazzino</p>
+        <div class="actions">
+          @if (role === 'Admin' || role === 'Supervisore') {
+            <button class="btn-primary">+ Aggiungi nuovo</button>
+            <button class="btn-secondary">Esporta</button>
+          }
+        </div>
+      </header>
+
+      <div class="inventory-table">
+        <table>
+          <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nome prodotto</th>
+            <th>Categoria</th>
+            <th>Quantità</th>
+            <th>Prezzo</th>
+            <th>Stato</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>001</td>
+            <td>Prodotto A</td>
+            <td>Elettronica</td>
+            <td>120</td>
+            <td>€59.99</td>
+            <td><span class="status in-stock">Disponibile</span></td>
+          </tr>
+          <tr>
+            <td>002</td>
+            <td>Prodotto B</td>
+            <td>Casa</td>
+            <td>12</td>
+            <td>€24.90</td>
+            <td><span class="status low-stock">Scorte basse</span></td>
+          </tr>
+          <tr>
+            <td>003</td>
+            <td>Prodotto C</td>
+            <td>Accessori</td>
+            <td>0</td>
+            <td>€15.00</td>
+            <td><span class="status out-stock">Esaurito</span></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  }
+
+  <button (click)="logout()">Logout</button>
+</div>
