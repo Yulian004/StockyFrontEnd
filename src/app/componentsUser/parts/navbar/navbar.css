@@ -1,4 +1,4 @@
-/* Stile generale della navbar */
+/* ================= Navbar ================= */
 .navbar {
   background-color: #1e1e1e;
   padding: 0.8rem 2rem;
@@ -9,9 +9,17 @@
 /* Container per gli elementi */
 .navbar-nav {
   display: flex;
-  justify-content: space-evenly; /* Distribuisce equamente */
+  justify-content: space-between;
   align-items: center;
   width: 100%;
+}
+
+/* Gruppi di link */
+.nav-left,
+.nav-right {
+  display: flex;
+  gap: 1rem;
+  position: relative; /* importante per il dropdown */
 }
 
 /* Link principali */
@@ -25,8 +33,6 @@
   padding: 0.5rem 1rem !important;
 }
 
-
-
 /* Hover e attivo */
 .nav-link:hover,
 .nav-link.active {
@@ -35,30 +41,44 @@
   border-radius: 8px;
 }
 
-/* Brand (Logo) */
-.navbar-brand {
-  font-weight: bold;
-  font-size: 1.3rem;
-  color: #ffffff !important;
-  letter-spacing: 1px;
+/* ================= Avatar e Dropdown ================= */
+.avatar-link {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
 }
 
-/* Toggler per mobile */
-.navbar-toggler {
-  border-color: #666;
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  margin-right: 8px;
+  object-fit: cover;
 }
 
-/* Navbar su schermi piccoli */
+
+
+/* ================= Navbar mobile ================= */
 @media (max-width: 991px) {
   .navbar-nav {
     flex-direction: column;
     justify-content: center;
   }
 
-  .nav-link {
+  .nav-left,
+  .nav-right {
+    flex-direction: column;
     width: 100%;
     text-align: center;
+    gap: 0.2rem;
+  }
+
+  .nav-link {
+    width: 100%;
     margin: 0.2rem 0;
   }
-}
 
+}
