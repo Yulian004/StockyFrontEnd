@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import {NuovoMessaggioComponent} from './modaleNuovoMessaggio/nuovo-messaggio.component';
 import {NavbarComponent} from '../parts/navbar/navbar';
@@ -54,13 +53,6 @@ export class Messaggi {
     this.notifFilter = filter;
   }
 
-
-  messages: Message[] = [
-    { sender: 'Mario Rossi', subject: 'Aggiornamento ordine', time: '10:15', unread: true, content: 'Il tuo ordine #1024 è stato spedito.' },
-    { sender: 'Anna Bianchi', subject: 'Riunione confermata', time: 'Ieri', content: 'Domani ore 9:00.' },
-    { sender: 'Supporto', subject: 'Benvenuto', time: '22 ott', content: 'Attiva il tuo account.' },
-  ];
-
   notifications: Notification[] = [
     { title: 'Sistema aggiornato', description: 'La piattaforma è stata aggiornata alle 10:00', time: 'Oggi, 10:05', read: false },
     { title: 'Nuovo messaggio', description: 'Hai ricevuto un messaggio da Luca', time: 'Ieri, 18:20', read: true },
@@ -68,6 +60,7 @@ export class Messaggi {
   ];
 
   selectedMessage?: Message;
+  messages: any;
 
   setView(viewName: 'inbox' | 'notifications') {
     this.view = viewName;
@@ -82,8 +75,5 @@ export class Messaggi {
   toggleRead(notif: Notification) {
     notif.read = !notif.read;
   }
-  ngOnInit(): void {
-    // 👇 Recupera il ruolo da localStorage o da un servizio
-    this.role = localStorage.getItem('userRole') || 'User';
-  }
+
 }
