@@ -147,7 +147,7 @@ export class RegisterComponent {
       updatePayload.password = v.password;
     }
 
-    // endpoint PUT /api/users/:id
+    // endpoint PUT da /api/users/:id
     const id = this.editingUser._id;
     this.http.put<{ message?: string }>(`${this.API}/${id}`, updatePayload).subscribe({
       next: (res) => {
