@@ -27,6 +27,11 @@ export class RegisterComponent {
   successMessage: string | null = null;
   errorMessage: string | null = null;
 
+  // Lista utenti (solo Admin)
+  usersList: any[] = [];
+  isLoadingUsers = false;
+  loadUsersError: string | null = null;
+
   // Register form
   registerForm = new FormGroup({
     nome: new FormControl('', Validators.required),
@@ -53,12 +58,18 @@ export class RegisterComponent {
   searchEmail: string = '';
   editingUser: any = null; // conterrà l'utente caricato { _id, nome, cognome, email, ruolo, roles }
 
-  private API = 'http://localhost:3000/api/users';
+  private API = 'api/admin';
 
   constructor(private http: HttpClient) {
     this.role = localStorage.getItem('userRole') || '';
+
+    // Se Admin, carica tutti gli utenti
+    if (this.role === 'Admin') {
+      this.loadAllUsers();
+    }
   }
 
+  // Registra
   onRegister() {
     this.successMessage = null;
     this.errorMessage = null;
@@ -78,11 +89,14 @@ export class RegisterComponent {
       ruolo: v.ruolo!
     };
 
-    this.http.post<{ message: string }>(this.API, payload).subscribe({
+    this.http.post<{ message: string }>('/api/create', payload).subscribe({
       next: (res) => {
         this.isRegistering = false;
         this.successMessage = res.message || 'Utente registrato con successo';
         this.registerForm.reset();
+
+        // aggiorna lista se admin
+        if (this.role === 'Admin') this.loadAllUsers();
       },
       error: (err: HttpErrorResponse) => {
         this.isRegistering = false;
@@ -91,7 +105,7 @@ export class RegisterComponent {
     });
   }
 
-  // Cerca utente per email e popola editForm
+ // Modifica e ricerca
   findUserByEmail() {
     this.successMessage = null;
     this.errorMessage = null;
@@ -105,13 +119,17 @@ export class RegisterComponent {
           return;
         }
         this.editingUser = u;
-        // Popola form (password vuota: cambia solo se inserita)
+        // Butta nella form (password vuota: cambia solo se inserita)
         this.editForm.setValue({
           nome: u.nome || '',
           cognome: u.cognome || '',
           email: u.email || '',
           password: '',
-          ruolo: (u.roles && u.roles.includes('Admin')) ? 'Admin' : (u.roles && u.roles.includes('Supervisore') ? 'Supervisore' : 'User')
+          ruolo: (u.roles && u.roles.includes('Admin'))
+            ? 'Admin'
+            : (u.roles && u.roles.includes('Supervisore'))
+              ? 'Supervisore'
+              : 'User'
         });
       },
       error: (err) => {
@@ -147,16 +165,18 @@ export class RegisterComponent {
       updatePayload.password = v.password;
     }
 
-    // endpoint PUT /api/users/:id
+    // endpoint PUT da /api/modify
     const id = this.editingUser._id;
-    this.http.put<{ message?: string }>(`${this.API}/${id}`, updatePayload).subscribe({
+    this.http.put<{ message?: string }>('api/modify', updatePayload).subscribe({
       next: (res) => {
         this.isSavingEdit = false;
         this.successMessage = res.message || 'Utente aggiornato con successo';
         // aggiorna local copy
         this.editingUser = { ...this.editingUser, ...updatePayload };
-        // svuota password
         this.editForm.get('password')?.setValue('');
+
+        // aggiorna lista se admin
+        if (this.role === 'Admin') this.loadAllUsers();
       },
       error: (err) => {
         this.isSavingEdit = false;
@@ -169,5 +189,24 @@ export class RegisterComponent {
     this.editingUser = null;
     this.editForm.reset();
     this.searchEmail = '';
+  }
+
+
+  // Lista admin utenti
+
+  loadAllUsers() {
+    this.isLoadingUsers = true;
+    this.loadUsersError = null;
+
+    this.http.get<any[]>('/api/users').subscribe({
+      next: (users) => {
+        this.isLoadingUsers = false;
+        this.usersList = users;
+      },
+      error: (err) => {
+        this.isLoadingUsers = false;
+        this.loadUsersError = err.error?.message || 'Errore nel caricamento utenti';
+      }
+    });
   }
 }

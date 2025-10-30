@@ -1,7 +1,9 @@
 <div class="dashboard-container">
-  <h2>Benvenuto in Stocky!</h2>
   <app-navbar [role]="role"></app-navbar>
 
+  <h2>Benvenuto in Stocky!</h2>
+
+  <!-- Messaggi introduttivi -->
   @if (role === 'Admin') {
     <section>
       <h3>Area Amministratore</h3>
@@ -10,99 +12,123 @@
   } @else if (role === 'Supervisore') {
     <section>
       <h3>Area Supervisore</h3>
-      <p>Puoi monitorare attività e modificare prodotti</p>
+      <p>Puoi aggiungere, modificare o eliminare prodotti</p>
     </section>
   } @else if (role === 'User') {
     <section>
       <h3>Area Utente</h3>
-      <p>Benvenuto! Puoi visualizzare i prodotti</p>
-    </section>
-  } @else {
-    <section>
-      <h3>Nessun ruolo riconosciuto</h3>
-      <p>Non hai i permessi per accedere a questa sezione.</p>
+      <p>Puoi acquistare, vendere o aggiornare quantità dei prodotti</p>
     </section>
   }
 
-  @if (role === 'Admin' || role === 'Supervisore' || role === 'User') {
-    <section class="inventory-page">
-      <header class="inventory-header">
-        <h2>Inventario</h2>
-        <p class="subtitle">Gestione e visualizzazione dei prodotti in magazzino</p>
-        <div class="actions">
-          @if (role === 'Admin' || role === 'Supervisore') {
-            <button class="btn-primary">+ Aggiungi nuovo</button>
-            <button class="btn-secondary">Esporta</button>
-          }
-        </div>
-      </header>
+  <!-- Inventario -->
+  <section class="inventory-page">
+    <header class="inventory-header">
+      <h2>Inventario</h2>
+      <p class="subtitle">Gestione e visualizzazione dei prodotti</p>
 
-      <div class="inventory-table">
-        <table>
-          <thead>
-          <tr>
-            <th>Nome prodotto</th>
-            <th>Categoria</th>
-            <th>Quantità</th>
-            <th>Prezzo</th>
-            <th>Stato</th>
-            <th>Operazioni</th>
-          </tr>
-          </thead>
-
-          <tbody>
-            @for (product of products; track product._id) {
-              <tr>
-                <td>{{ product.name }}</td>
-                <td>{{ product.category }}</td>
-
-                <td>
-                  @if (role === 'User' || role === 'Admin' || role === 'Supervisore') {
-                    <input
-                      type="number"
-                      [(ngModel)]="product.quantity"
-                      [readonly]="role === 'User'"
-                      min="0"
-                    />
-                  }
-                </td>
-
-                <td>
-                  @if (role !== 'User') {
-                    <input
-                      type="number"
-                      [(ngModel)]="product.price"
-                      step="0.01"
-                    />
-                  } @else {
-                    <span>€{{ product.price }}</span>
-                  }
-                </td>
-
-                <td>
-                  @if (role !== 'User') {
-                    <select [(ngModel)]="product.status">
-                      <option value="Disponibile">Disponibile</option>
-                      <option value="Scorte basse">Scorte basse</option>
-                      <option value="Esaurito">Esaurito</option>
-                    </select>
-                  } @else {
-                    <span>{{ product.status }}</span>
-                  }
-                </td>
-
-                <td>
-                  <button class="btn-primary" (click)="updateProduct(product)">💾 Salva</button>
-                </td>
-              </tr>
-            } @empty {
-              <tr>
-                <td colspan="6">Nessun prodotto disponibile</td>
-              </tr>
-            }
-          </tbody>
-        </table>
+      <div class="actions">
+        @if (role === 'Supervisore') {
+          <button class="btn-primary" (click)="showAddForm = !showAddForm">
+            {{ showAddForm ? 'Chiudi form' : '+ Aggiungi nuovo' }}
+          </button>
+        }
       </div>
-    </section>
-  }
+    </header>
+
+    <!-- FORM AGGIUNTA PRODOTTO -->
+    @if (showAddForm && role === 'Supervisore') {
+      <div class="add-form">
+        <h4>Nuovo prodotto</h4>
+        <form (ngSubmit)="addProduct()" #addForm="ngForm">
+          <input type="text" placeholder="Nome" [(ngModel)]="newProduct.name" name="name" required />
+          <input type="text" placeholder="Categoria" [(ngModel)]="newProduct.category" name="category" required />
+          <input type="number" placeholder="Quantità" [(ngModel)]="newProduct.quantity" name="quantity" required />
+          <input type="number" placeholder="Prezzo" [(ngModel)]="newProduct.price" name="price" step="0.01" required />
+          <select [(ngModel)]="newProduct.status" name="status">
+            <option value="Disponibile">Disponibile</option>
+            <option value="Scorte basse">Scorte basse</option>
+            <option value="Esaurito">Esaurito</option>
+          </select>
+          <button class="btn-primary" type="submit">➕ Aggiungi</button>
+        </form>
+      </div>
+    }
+
+    <!-- TABELLA PRODOTTI -->
+    <div class="inventory-table">
+      <table>
+        <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Categoria</th>
+          <th>Quantità</th>
+          <th>Prezzo</th>
+          <th>Stato</th>
+          <th>Operazioni</th>
+        </tr>
+        </thead>
+
+        <tbody>
+          @for (product of products; track product._id) {
+            <tr>
+              <td>
+                @if (role === 'Supervisore') {
+                  <input [(ngModel)]="product.name" />
+                } @else {
+                  {{ product.name }}
+                }
+              </td>
+
+              <td>
+                @if (role === 'Supervisore') {
+                  <input [(ngModel)]="product.category" />
+                } @else {
+                  {{ product.category }}
+                }
+              </td>
+
+              <td>
+                <input type="number" [(ngModel)]="product.quantity" min="0" />
+              </td>
+
+              <td>
+                @if (role === 'Supervisore') {
+                  <input type="number" [(ngModel)]="product.price" step="0.01" />
+                } @else {
+                  €{{ product.price }}
+                }
+              </td>
+
+              <td>
+                @if (role === 'Supervisore') {
+                  <select [(ngModel)]="product.status">
+                    <option value="Disponibile">Disponibile</option>
+                    <option value="Scorte basse">Scorte basse</option>
+                    <option value="Esaurito">Esaurito</option>
+                  </select>
+                } @else {
+                  {{ product.status }}
+                }
+              </td>
+
+              <td>
+                @if (role === 'Supervisore') {
+                  <button (click)="updateProduct(product)">💾</button>
+                  <button (click)="deleteProduct(product._id)">🗑️</button>
+                } @else if (role === 'User') {
+                  <button (click)="addQuantity(product)">➕ Add</button>
+                  <button (click)="subQuantity(product)">➖ Sub</button>
+                  <button (click)="adjustQuantity(product)">⚙️ Adj</button>
+                }
+              </td>
+            </tr>
+          } @empty {
+            <tr><td colspan="6">Nessun prodotto disponibile</td></tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
 </div>
+

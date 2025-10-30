@@ -1,53 +1,65 @@
-<div class = "nab">
-<app-navbar [role]="role"></app-navbar>
+<div class="nab">
+  <app-navbar [role]="role"></app-navbar>
 </div>
+
 <section class="history-page">
-  <header class="history-header">
-    <h2>Storico Attività</h2>
-    <p class="subtitle">Consulta la cronologia delle azioni recenti e passate</p>
+  @if (role === 'Admin' || role === 'Supervisore') {
+    <header class="history-header">
+      <h2>Storico Operazioni</h2>
+      <p class="subtitle">Consulta la cronologia delle azioni effettuate sul magazzino</p>
 
-    <div class="filters">
-      <select>
-        <option>Tutti i tipi</option>
-        <option>Ordini</option>
-        <option>Movimenti magazzino</option>
-        <option>Notifiche</option>
-      </select>
-      <select>
-        <option>Ultimi 7 giorni</option>
-        <option>Ultimo mese</option>
-        <option>Ultimo trimestre</option>
-      </select>
-      <button class="btn-secondary">Filtra</button>
+      <div class="filters">
+        <!-- Filtro utente, non fa vedere nulla perchè mancano utenti. No preoccupes -->
+        <select [(ngModel)]="selectedUser" (change)="applyFilters()">
+          @for (user of users; track user) {
+            <option [value]="user">{{ user }}</option>
+          }
+        </select>
+
+        <!-- Filtro tempo -->
+        <select [(ngModel)]="selectedTime" (change)="applyFilters()">
+          @for (f of timeFilters; track f) {
+            <option [value]="f">{{ f }}</option>
+          }
+        </select>
+
+        <button class="btn-secondary" (click)="applyFilters()">Filtra</button>
+      </div>
+    </header>
+
+    <div class="history-list">
+      @for (op of filteredOperations; track op) {
+        <article class="history-item">
+          <div class="item-header">
+            <h3>{{ op.action }} - {{ op.product }}</h3>
+            <span class="date">{{ op.timestamp | date:'dd MMM yyyy - HH:mm' }}</span>
+          </div>
+          <p>
+            Eseguito da <strong>{{ op.user }}</strong> — Quantità: {{ op.quantity }}
+          </p>
+          <span
+            class="tag"
+            [ngClass]="{
+              'success': op.status === 'Completato',
+              'info': op.status === 'Inventario',
+              'danger': op.status === 'Errore'
+            }"
+          >
+            {{ op.status }}
+          </span>
+        </article>
+      }
+
+      @if (filteredOperations.length === 0) {
+        <p style="text-align:center; opacity:0.8;">
+          Nessuna operazione trovata per i filtri selezionati.
+        </p>
+      }
     </div>
-  </header>
-
-  <div class="history-list">
-    <article class="history-item">
-      <div class="item-header">
-        <h3>Ordine #1024 completato</h3>
-        <span class="date">24 ottobre 2025 - 10:30</span>
-      </div>
-      <p>L’ordine del cliente <strong>Mario Rossi</strong> è stato completato con successo.</p>
-      <span class="tag success">Completato</span>
-    </article>
-
-    <article class="history-item">
-      <div class="item-header">
-        <h3>Scorte aggiornate</h3>
-        <span class="date">23 ottobre 2025 - 14:15</span>
-      </div>
-      <p>Aggiunti 50 nuovi articoli al magazzino.</p>
-      <span class="tag info">Inventario</span>
-    </article>
-
-    <article class="history-item">
-      <div class="item-header">
-        <h3>Ordine #1019 annullato</h3>
-        <span class="date">22 ottobre 2025 - 09:00</span>
-      </div>
-      <p>L’ordine non è stato confermato entro i termini previsti.</p>
-      <span class="tag danger">Annullato</span>
-    </article>
-  </div>
+  } @else {
+    <section class="history-page">
+      <h2>Accesso negato</h2>
+      <p>Solo Amministratori e Supervisori possono visualizzare lo storico delle operazioni.</p>
+    </section>
+  }
 </section>
