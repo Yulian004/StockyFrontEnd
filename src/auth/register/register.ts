@@ -53,7 +53,7 @@ export class RegisterComponent {
   searchEmail: string = '';
   editingUser: any = null; // conterrà l'utente caricato { _id, nome, cognome, email, ruolo, roles }
 
-  private API = 'http://localhost:3000/api/users';
+  private API = 'api/users';
 
   constructor(private http: HttpClient) {
     this.role = localStorage.getItem('userRole') || '';
