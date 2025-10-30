@@ -6,29 +6,30 @@
   @if (role === 'Admin' || role === 'Supervisore') {
     <header class="history-header">
       <h2>Storico Operazioni</h2>
-      <p class="subtitle">Consulta la cronologia delle azioni effettuate sul magazzino</p>
+      <p class="subtitle">Visualizza tutte le operazioni effettuate su prodotti o utenti</p>
 
       <div class="filters">
-        <!-- Filtro utente, non fa vedere nulla perchè mancano utenti. No preoccupes -->
-        <select [(ngModel)]="selectedUser" (change)="applyFilters()">
+        <!-- Filtro utente -->
+        <label for="userFilter">Utente:</label>
+        <select id="userFilter" [(ngModel)]="selectedUser">
           @for (user of users; track user) {
             <option [value]="user">{{ user }}</option>
           }
         </select>
 
-        <!-- Filtro tempo -->
-        <select [(ngModel)]="selectedTime" (change)="applyFilters()">
-          @for (f of timeFilters; track f) {
-            <option [value]="f">{{ f }}</option>
-          }
-        </select>
+        <!-- Filtro per intervallo di date -->
+        <label for="start">Dal:</label>
+        <input id="start" type="date" [(ngModel)]="startDate">
+
+        <label for="end">Al:</label>
+        <input id="end" type="date" [(ngModel)]="endDate">
 
         <button class="btn-secondary" (click)="applyFilters()">Filtra</button>
       </div>
     </header>
 
     <div class="history-list">
-      @for (op of filteredOperations; track op) {
+      @for (op of filteredOperations; track op._id) {
         <article class="history-item">
           <div class="item-header">
             <h3>{{ op.action }} - {{ op.product }}</h3>
@@ -52,7 +53,7 @@
 
       @if (filteredOperations.length === 0) {
         <p style="text-align:center; opacity:0.8;">
-          Nessuna operazione trovata per i filtri selezionati.
+          Nessuna operazione trovata per l’intervallo selezionato.
         </p>
       }
     </div>

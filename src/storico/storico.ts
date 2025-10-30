@@ -27,10 +27,9 @@ export class Storico implements OnInit {
   filteredOperations: Operation[] = [];
 
   users: string[] = [];
-  timeFilters = ['Tutti', 'Ultimi 7 giorni', 'Ultimo mese', 'Ultimo trimestre'];
-
   selectedUser: string = 'Tutti';
-  selectedTime: string = 'Tutti';
+  startDate: string = '';
+  endDate: string = '';
 
   private readonly API = 'api/storico';
 
@@ -38,47 +37,46 @@ export class Storico implements OnInit {
 
   ngOnInit(): void {
     this.role = localStorage.getItem('userRole') || 'User';
-
-    // Solo Admin e Supervisore possono accedere
     if (this.role === 'Admin' || this.role === 'Supervisore') {
       this.loadOperations();
     }
   }
 
+  // 🔹 Carica tutto lo storico all'avvio
   loadOperations() {
     this.http.get<Operation[]>(this.API).subscribe({
       next: (data) => {
         this.operations = data;
         this.filteredOperations = data;
-
-        // Estrai lista univoca utenti
         this.users = ['Tutti', ...new Set(data.map(op => op.user))];
       },
       error: (err) => console.error('Errore caricamento storico:', err)
     });
   }
 
+  // 🔹 Filtro basato su range di date e utente
   applyFilters() {
-    let result = [...this.operations];
+    if (!this.startDate || !this.endDate) {
+      alert('Seleziona sia la data di inizio che quella di fine.');
+      return;
+    }
 
-    // 🔹 Filtro utente
+    const params: any = {
+      start: this.startDate,
+      end: this.endDate
+    };
     if (this.selectedUser !== 'Tutti') {
-      result = result.filter(op => op.user === this.selectedUser);
+      params.user = this.selectedUser;
     }
 
-    // 🔹 Filtro tempo
-    const now = new Date();
-    if (this.selectedTime === 'Ultimi 7 giorni') {
-      const weekAgo = new Date(now.setDate(now.getDate() - 7));
-      result = result.filter(op => new Date(op.timestamp) >= weekAgo);
-    } else if (this.selectedTime === 'Ultimo mese') {
-      const monthAgo = new Date(now.setMonth(now.getMonth() - 1));
-      result = result.filter(op => new Date(op.timestamp) >= monthAgo);
-    } else if (this.selectedTime === 'Ultimo trimestre') {
-      const quarterAgo = new Date(now.setMonth(now.getMonth() - 3));
-      result = result.filter(op => new Date(op.timestamp) >= quarterAgo);
-    }
-
-    this.filteredOperations = result;
+    this.http.get<Operation[]>(`${this.API}/range`, { params }).subscribe({
+      next: (data) => {
+        this.filteredOperations = data;
+      },
+      error: (err) => {
+        console.error('Errore nel filtro temporale:', err);
+        alert('Errore durante il filtraggio per data.');
+      }
+    });
   }
 }
