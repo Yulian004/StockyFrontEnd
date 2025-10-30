@@ -79,4 +79,110 @@
     margin: 0.3rem 0;
   }
 }
+/* ===== DROPDOWN MENU (AVATAR) ===== */
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.avatar:hover {
+  transform: scale(1.05);
+  border-color: #ffffff;
+}
+
+/* Contenitore del dropdown */
+.dropdown-menu-custom {
+  position: absolute;
+  right: 0;
+  top: 40px;
+  background: #ffffff;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
+  min-width: 160px;
+  z-index: 1050;
+  animation: fadeInDropdown 0.25s ease-in-out;
+  overflow: hidden;
+}
+
+/* Elementi del menu */
+.dropdown-menu-custom div {
+  padding: 10px 16px;
+  color: #000000;
+  font-weight: 500;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.dropdown-menu-custom div:hover {
+  background: rgba(0, 180, 216, 0.1);
+  color: #0077b6;
+}
+
+/* Animazione d’apertura */
+@keyframes fadeInDropdown {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dropdown-toggle-icon {
+  color: #f0f8ff;
+  font-size: 0.75rem;
+  margin-left: 4px;
+  transition: transform 0.2s ease;
+}
+
+.dropdown-toggle-icon.open {
+  transform: rotate(180deg);
+}
+.navbar .nav-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.navbar .nav-link svg {
+  margin-bottom: 0 !important;
+}
+
+.navbar .nav-item {
+  display: flex;
+  align-items: center;
+}
+/* Logo statico STOCKY */
+.static-logo {
+  display: inline-flex;
+  align-items: center;
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: #ffffff;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  background: transparent !important;
+  box-shadow: none !important;
+  pointer-events: none; /* completamente non interattivo */
+}
+
+.static-logo svg {
+  margin-bottom: 0;
+}
+
+.static-logo .logo-text {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
 

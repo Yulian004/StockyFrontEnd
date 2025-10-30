@@ -1,97 +1,139 @@
 <app-navbar [role]="role"></app-navbar>
 
-<div class="register-container">
-  <h2>Registrazione</h2>
+<div class="register-page">
+  <div class="register-container">
 
-  @if (successMessage) {
-    <div class="alert alert-success">
-      {{ successMessage }}
-    </div>
-  }
+    <h2>Gestione Utenti</h2>
 
-  @if (errorMessage) {
-    <div class="alert alert-danger">
-      {{ errorMessage }}
-    </div>
-  }
+    @if (successMessage) {
+      <div class="alert alert-success">{{ successMessage }}</div>
+    }
 
-  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-    <div>
-      <label for="nome">Nome:</label>
-      <input id="nome" type="text" formControlName="nome" required placeholder="Mario">
-      @if (registerForm.get('nome')?.invalid && (registerForm.get('nome')?.dirty || registerForm.get('nome')?.touched)) {
-        <div>
-          @if (registerForm.get('nome')?.errors?.['required']) {
-            <small>Il nome è obbligatorio.</small>
-          }
+    @if (errorMessage) {
+      <div class="alert alert-danger">{{ errorMessage }}</div>
+    }
+
+    <div class="forms-wrapper">
+      <!-- ===== FORM: Registrazione Nuovo Utente ===== -->
+      <section class="form-card">
+        <h3>Registrazione Nuovo Utente</h3>
+        <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+          <div>
+            <label for="nome">Nome:</label>
+            <input id="nome" type="text" formControlName="nome" placeholder="Mario">
+            @if (registerForm.get('nome')?.invalid && (registerForm.get('nome')?.dirty || registerForm.get('nome')?.touched)) {
+              <div><small>Il nome è obbligatorio.</small></div>
+            }
+          </div>
+
+          <div>
+            <label for="cognome">Cognome:</label>
+            <input id="cognome" type="text" formControlName="cognome" placeholder="Rossi">
+            @if (registerForm.get('cognome')?.invalid && (registerForm.get('cognome')?.dirty || registerForm.get('cognome')?.touched)) {
+              <div><small>Il cognome è obbligatorio.</small></div>
+            }
+          </div>
+
+          <div>
+            <label for="email">Email:</label>
+            <input id="email" type="email" formControlName="email" placeholder="mario.rossi@email.com">
+            @if (registerForm.get('email')?.invalid && (registerForm.get('email')?.dirty || registerForm.get('email')?.touched)) {
+              <div>
+                @if (registerForm.get('email')?.errors?.['required']) {
+                  <small>L'email è obbligatoria.</small>
+                }
+                @if (registerForm.get('email')?.errors?.['email']) {
+                  <small>Inserisci un'email valida.</small>
+                }
+              </div>
+            }
+          </div>
+
+          <div>
+            <label for="password">Password:</label>
+            <input id="password" type="password" formControlName="password" placeholder="********">
+            @if (registerForm.get('password')?.invalid && (registerForm.get('password')?.dirty || registerForm.get('password')?.touched)) {
+              <div>
+                @if (registerForm.get('password')?.errors?.['required']) {
+                  <small>La password è obbligatoria.</small><br>
+                }
+                @if (registerForm.get('password')?.errors?.['minlength']) {
+                  <small>Minimo 8 caratteri.</small><br>
+                }
+                @if (registerForm.get('password')?.errors?.['pattern']) {
+                  <small>Deve contenere almeno una maiuscola, una minuscola, un numero e un carattere speciale.</small>
+                }
+              </div>
+            }
+          </div>
+
+          <div>
+            <label for="ruolo">Ruolo:</label>
+            <select id="ruolo" formControlName="ruolo">
+              <option value="" disabled selected>Seleziona un ruolo</option>
+              <option value="User">Utente</option>
+              <option value="Supervisore">Supervisore</option>
+              <option value="Admin">Admin</option>
+            </select>
+            @if (registerForm.get('ruolo')?.invalid && (registerForm.get('ruolo')?.dirty || registerForm.get('ruolo')?.touched)) {
+              <div><small>Il ruolo è obbligatorio.</small></div>
+            }
+          </div>
+
+          <button type="submit" [disabled]="isRegistering || registerForm.invalid">
+            {{ isRegistering ? 'Registrazione in corso...' : 'Registrati' }}
+          </button>
+        </form>
+      </section>
+
+      <!-- ===== FORM: Modifica Utente Esistente ===== -->
+      <section class="form-card">
+        <h3>Modifica Utente</h3>
+
+        <div class="search-bar">
+          <label for="searchEmail">Cerca per email:</label>
+          <input id="searchEmail" type="email" [(ngModel)]="searchEmail" placeholder="inserisci email e premi Cerca">
+          <button (click)="findUserByEmail()" [disabled]="!searchEmail">Cerca</button>
         </div>
-      }
-    </div>
 
-    <div>
-      <label for="cognome">Cognome:</label>
-      <input id="cognome" type="text" formControlName="cognome" required placeholder="Rossi">
-      @if (registerForm.get('cognome')?.invalid && (registerForm.get('cognome')?.dirty || registerForm.get('cognome')?.touched)) {
-        <div>
-          @if (registerForm.get('cognome')?.errors?.['required']) {
-            <small>Il cognome è obbligatorio.</small>
-          }
-        </div>
-      }
-    </div>
+        @if (editingUser) {
+          <form [formGroup]="editForm" (ngSubmit)="onEditSave()">
+            <div>
+              <label for="editNome">Nome:</label>
+              <input id="editNome" type="text" formControlName="nome">
+            </div>
 
-    <div>
-      <label for="email">Email:</label>
-      <input id="email" type="email" formControlName="email" required placeholder="mario.rossi@email.com">
-      @if (registerForm.get('email')?.invalid && (registerForm.get('email')?.dirty || registerForm.get('email')?.touched)) {
-        <div>
-          @if (registerForm.get('email')?.errors?.['required']) {
-            <small>L'email è obbligatoria.</small>
-          }
-          @if (registerForm.get('email')?.errors?.['email']) {
-            <small>Inserisci un'email valida.</small>
-          }
-        </div>
-      }
-    </div>
+            <div>
+              <label for="editCognome">Cognome:</label>
+              <input id="editCognome" type="text" formControlName="cognome">
+            </div>
 
-    <div>
-      <label for="password">Password:</label>
-      <input id="password" type="password" formControlName="password" required placeholder="********">
-      @if (registerForm.get('password')?.invalid && (registerForm.get('password')?.dirty || registerForm.get('password')?.touched)) {
-        <div>
-          @if (registerForm.get('password')?.errors?.['required']) {
-            <small>La password è obbligatoria.</small><br>
-          }
-          @if (registerForm.get('password')?.errors?.['minlength']) {
-            <small>La password deve essere lunga almeno 8 caratteri.</small><br>
-          }
-          @if (registerForm.get('password')?.errors?.['pattern']) {
-            <small>La password deve contenere almeno una maiuscola, una minuscola, un numero e un carattere speciale (&#64;$!%*?&.,;).</small>
-          }
-        </div>
-      }
-    </div>
+            <div>
+              <label for="editEmail">Email:</label>
+              <input id="editEmail" type="email" formControlName="email">
+            </div>
 
-    <div>
-      <label for="ruolo">Ruolo:</label>
-      <select id="ruolo" formControlName="ruolo" required>
-        <option value="" disabled selected>Seleziona un ruolo</option>
-        <option value="Utente">Utente</option>
-        <option value="Supervisore">Supervisore</option>
-        <option value="Admin">Admin</option>
-      </select>
-      @if (registerForm.get('ruolo')?.invalid && (registerForm.get('ruolo')?.dirty || registerForm.get('ruolo')?.touched)) {
-        <div>
-          @if (registerForm.get('ruolo')?.errors?.['required']) {
-            <small>Il ruolo è obbligatorio.</small>
-          }
-        </div>
-      }
-    </div>
+            <div>
+              <label for="editPassword">Password:</label>
+              <input id="editPassword" type="password" formControlName="password" placeholder="Nuova password se vuoi cambiarla">
+            </div>
 
-    <button type="submit" [disabled]="!registerForm.valid || isLoading">
-      {{ isLoading ? 'Registrazione in corso...' : 'Registrati' }}
-    </button>
-  </form>
+            <div>
+              <label for="editRuolo">Ruolo:</label>
+              <select id="editRuolo" formControlName="ruolo">
+                <option value="User">Utente</option>
+                <option value="Supervisore">Supervisore</option>
+                <option value="Admin">Admin</option>
+              </select>
+            </div>
+
+            <button type="submit" [disabled]="isSavingEdit">Salva modifiche</button>
+            <button type="button" (click)="cancelEdit()">Annulla</button>
+          </form>
+        } @else {
+          <div class="no-user">Nessun utente selezionato. Cerca un'email per caricare l'utente.</div>
+        }
+      </section>
+    </div>
+  </div>
 </div>

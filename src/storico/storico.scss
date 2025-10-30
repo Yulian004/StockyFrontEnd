@@ -219,3 +219,13 @@
 .history-header .filters select option {
   color: #000000;
 }
+.nab
+{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  margin: 0;
+  border: none;
+}

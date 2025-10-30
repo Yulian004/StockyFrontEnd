@@ -41,44 +41,68 @@
         <table>
           <thead>
           <tr>
-            <th>ID</th>
             <th>Nome prodotto</th>
             <th>Categoria</th>
             <th>Quantità</th>
             <th>Prezzo</th>
             <th>Stato</th>
+            <th>Operazioni</th>
           </tr>
           </thead>
+
           <tbody>
-          <tr>
-            <td>001</td>
-            <td>Prodotto A</td>
-            <td>Elettronica</td>
-            <td>120</td>
-            <td>€59.99</td>
-            <td><span class="status in-stock">Disponibile</span></td>
-          </tr>
-          <tr>
-            <td>002</td>
-            <td>Prodotto B</td>
-            <td>Casa</td>
-            <td>12</td>
-            <td>€24.90</td>
-            <td><span class="status low-stock">Scorte basse</span></td>
-          </tr>
-          <tr>
-            <td>003</td>
-            <td>Prodotto C</td>
-            <td>Accessori</td>
-            <td>0</td>
-            <td>€15.00</td>
-            <td><span class="status out-stock">Esaurito</span></td>
-          </tr>
+            @for (product of products; track product._id) {
+              <tr>
+                <td>{{ product.name }}</td>
+                <td>{{ product.category }}</td>
+
+                <td>
+                  @if (role === 'User' || role === 'Admin' || role === 'Supervisore') {
+                    <input
+                      type="number"
+                      [(ngModel)]="product.quantity"
+                      [readonly]="role === 'User'"
+                      min="0"
+                    />
+                  }
+                </td>
+
+                <td>
+                  @if (role !== 'User') {
+                    <input
+                      type="number"
+                      [(ngModel)]="product.price"
+                      step="0.01"
+                    />
+                  } @else {
+                    <span>€{{ product.price }}</span>
+                  }
+                </td>
+
+                <td>
+                  @if (role !== 'User') {
+                    <select [(ngModel)]="product.status">
+                      <option value="Disponibile">Disponibile</option>
+                      <option value="Scorte basse">Scorte basse</option>
+                      <option value="Esaurito">Esaurito</option>
+                    </select>
+                  } @else {
+                    <span>{{ product.status }}</span>
+                  }
+                </td>
+
+                <td>
+                  <button class="btn-primary" (click)="updateProduct(product)">💾 Salva</button>
+                </td>
+              </tr>
+            } @empty {
+              <tr>
+                <td colspan="6">Nessun prodotto disponibile</td>
+              </tr>
+            }
           </tbody>
         </table>
       </div>
     </section>
   }
-
-  <button (click)="logout()">Logout</button>
 </div>

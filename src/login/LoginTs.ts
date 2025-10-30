@@ -50,7 +50,7 @@ export class LoginComponent {
 
           alert('Login effettuato con successo ✅');
           this.router.navigate(['/dashboard']);
-          
+
           this.loading = false;
         },
         error: (err) => {
@@ -60,13 +60,3 @@ export class LoginComponent {
       });
   }
 }
-
-// TODO
-/*
-DA METTERE PUOI DENTRO LA PAGINE PROTETTE!!!
-logout() {
-  localStorage.removeItem('userRole');
-  localStorage.removeItem('token');
-  this.router.navigate(['/']);
-}
- */
