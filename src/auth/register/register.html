@@ -135,5 +135,28 @@
         }
       </section>
     </div>
+    <!-- ===== LISTA UTENTI (solo Admin) ===== -->
+    @if (role === 'Admin') {
+      <section class="user-list-card">
+        <h3>Lista Utenti</h3>
+
+        <div class="user-list">
+          @if (isLoadingUsers) {
+            <p>Caricamento utenti...</p>
+          } @else if (loadUsersError) {
+            <p class="error-text">{{ loadUsersError }}</p>
+          } @else if (usersList.length === 0) {
+            <p>Nessun utente trovato.</p>
+          } @else {
+            @for (u of usersList; track u.email) {
+              <div class="user-item">
+                <p><strong>{{ u.nome }} {{ u.cognome }}</strong> — {{ u.email }}</p>
+                <span class="role-tag">{{ u.ruolo }}</span>
+              </div>
+            }
+          }
+        </div>
+      </section>
+    }
   </div>
 </div>
