@@ -1,0 +1,72 @@
+<div class="modal-backdrop" (click)="close()"></div>
+
+<div #modal class="modal" (click)="$event.stopPropagation()">
+  <header class="modal-header" (mousedown)="startDrag($event)">
+    <h2>Nuovo messaggio</h2>
+    <div class="window-controls">
+      <button class="control-btn" title="Massimizza" (click)="toggleMaximize()">
+        🗗
+      </button>
+      <button class="control-btn close" (click)="close()">✖</button>
+    </div>
+  </header>
+
+  <form (ngSubmit)="sendMessage()" #form="ngForm" class="compose-form">
+    <div class="field">
+      <label>A:</label>
+      <input
+        type="text"
+        [(ngModel)]="message.sender"
+        name="sender"
+        placeholder="Destinatario"
+        required
+      />
+    </div>
+
+    <div class="field">
+      <label>Oggetto:</label>
+      <input
+        type="text"
+        [(ngModel)]="message.subject"
+        name="subject"
+        placeholder="Oggetto"
+        required
+      />
+    </div>
+
+    <div class="attachments">
+      <label class="attach-btn">
+        📎 Allegati
+        <input type="file" multiple (change)="onFilesSelected($event)" />
+      </label>
+
+      @if (attachments.length > 0) {
+        <ul>
+          @for (file of attachments; track file) {
+            <li>{{ file.name }}</li>
+          }
+        </ul>
+      }
+    </div>
+
+    <div class="toolbar">
+      <button type="button" (click)="format('bold')"><b>B</b></button>
+      <button type="button" (click)="format('italic')"><i>I</i></button>
+      <button type="button" (click)="format('underline')"><u>U</u></button>
+      <button type="button" (click)="format('insertUnorderedList')">• List</button>
+      <button type="button" (click)="format('insertOrderedList')">1.</button>
+    </div>
+
+    <div
+      class="editor"
+      contenteditable="true"
+      (input)="updateContent($event)"
+      placeholder="Scrivi il tuo messaggio..."
+    ></div>
+
+    <footer class="modal-footer">
+      <button type="submit" class="send-btn">Invia</button>
+      <button type="button" class="cancel-btn" (click)="close()">Annulla</button>
+    </footer>
+  </form>
+</div>

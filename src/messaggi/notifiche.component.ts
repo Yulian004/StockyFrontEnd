@@ -4,11 +4,11 @@ import {NavbarComponent} from '../parts/navbar/navbar';
 
 @Component({
   selector: 'app-notifications-page',
-  templateUrl: './notificheComponent.html',
+  templateUrl: './notifiche.component.html',
   imports: [
     NavbarComponent
   ],
-  styleUrls: ['./notificheComponent.css']
+  styleUrls: ['./notifiche.component.css']
 })
 
 
