@@ -1,0 +1,53 @@
+<div class = "nab">
+<app-navbar [role]="role"></app-navbar>
+</div>
+<section class="history-page">
+  <header class="history-header">
+    <h2>Storico Attività</h2>
+    <p class="subtitle">Consulta la cronologia delle azioni recenti e passate</p>
+
+    <div class="filters">
+      <select>
+        <option>Tutti i tipi</option>
+        <option>Ordini</option>
+        <option>Movimenti magazzino</option>
+        <option>Notifiche</option>
+      </select>
+      <select>
+        <option>Ultimi 7 giorni</option>
+        <option>Ultimo mese</option>
+        <option>Ultimo trimestre</option>
+      </select>
+      <button class="btn-secondary">Filtra</button>
+    </div>
+  </header>
+
+  <div class="history-list">
+    <article class="history-item">
+      <div class="item-header">
+        <h3>Ordine #1024 completato</h3>
+        <span class="date">24 ottobre 2025 - 10:30</span>
+      </div>
+      <p>L’ordine del cliente <strong>Mario Rossi</strong> è stato completato con successo.</p>
+      <span class="tag success">Completato</span>
+    </article>
+
+    <article class="history-item">
+      <div class="item-header">
+        <h3>Scorte aggiornate</h3>
+        <span class="date">23 ottobre 2025 - 14:15</span>
+      </div>
+      <p>Aggiunti 50 nuovi articoli al magazzino.</p>
+      <span class="tag info">Inventario</span>
+    </article>
+
+    <article class="history-item">
+      <div class="item-header">
+        <h3>Ordine #1019 annullato</h3>
+        <span class="date">22 ottobre 2025 - 09:00</span>
+      </div>
+      <p>L’ordine non è stato confermato entro i termini previsti.</p>
+      <span class="tag danger">Annullato</span>
+    </article>
+  </div>
+</section>

@@ -1,0 +1,137 @@
+/* ===== LOGIN WRAPPER ===== */
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  background: linear-gradient(135deg, #00b4d8, #0077b6);
+  font-family: 'Arial', sans-serif;
+}
+
+/* ===== LOGIN CONTAINER ===== */
+.login {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(12px);
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+  padding: 40px 30px;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  color: #fff;
+
+  /* Animazione di entrata */
+  transform: translateY(-20px);
+  opacity: 0;
+  animation: fadeIn 0.6s forwards ease-out;
+}
+
+/* ===== FADE-IN ANIMATION ===== */
+@keyframes fadeIn {
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ===== TITOLO ===== */
+.login h2 {
+  margin-bottom: 25px;
+  color: #caf0f8;
+  font-size: 2rem;
+  font-weight: 700;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* ===== INPUT GROUP ===== */
+.form {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+/* ===== LABEL ===== */
+.form label {
+  display: block;
+  margin-bottom: 6px;
+  color: #000000;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+/* ===== INPUT ===== */
+.form input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  font-size: 1rem;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+/* ===== INPUT FOCUS ===== */
+.form input:focus {
+  border-color: #90e0ef;
+  box-shadow: 0 0 8px rgba(144, 224, 239, 0.4);
+  outline: none;
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* ===== PLACEHOLDER ===== */
+input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* ===== BUTTON ===== */
+button[type="submit"] {
+  width: 100%;
+  padding: 12px;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 8px;
+  background: #00b4d8;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  margin-top: 10px;
+}
+
+/* ===== BUTTON HOVER ===== */
+button[type="submit"]:hover {
+  background: #0096c7;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
+}
+
+/* ===== BUTTON DISABLED ===== */
+button[disabled] {
+  background: rgba(0, 180, 216, 0.5);
+  cursor: not-allowed;
+}
+
+/* ===== ERROR TEXT ===== */
+.error {
+  color: #ff6b6b;
+  font-size: 0.9rem;
+  margin-top: 5px;
+  font-weight: 500;
+}
+
+/* ===== GLOBAL ERROR BOX ===== */
+.error-msg {
+  background: rgba(255, 0, 0, 0.1);
+  color: #ffb3b3;
+  padding: 10px;
+  border: 1px solid rgba(255, 0, 0, 0.2);
+  border-radius: 8px;
+  margin-bottom: 15px;
+  font-size: 0.95rem;
+  text-align: center;
+  backdrop-filter: blur(4px);
+}

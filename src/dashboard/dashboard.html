@@ -1,0 +1,108 @@
+<div class="dashboard-container">
+  <h2>Benvenuto in Stocky!</h2>
+  <app-navbar [role]="role"></app-navbar>
+
+  @if (role === 'Admin') {
+    <section>
+      <h3>Area Amministratore</h3>
+      <p>Puoi gestire utenti, impostazioni e prodotti</p>
+    </section>
+  } @else if (role === 'Supervisore') {
+    <section>
+      <h3>Area Supervisore</h3>
+      <p>Puoi monitorare attività e modificare prodotti</p>
+    </section>
+  } @else if (role === 'User') {
+    <section>
+      <h3>Area Utente</h3>
+      <p>Benvenuto! Puoi visualizzare i prodotti</p>
+    </section>
+  } @else {
+    <section>
+      <h3>Nessun ruolo riconosciuto</h3>
+      <p>Non hai i permessi per accedere a questa sezione.</p>
+    </section>
+  }
+
+  @if (role === 'Admin' || role === 'Supervisore' || role === 'User') {
+    <section class="inventory-page">
+      <header class="inventory-header">
+        <h2>Inventario</h2>
+        <p class="subtitle">Gestione e visualizzazione dei prodotti in magazzino</p>
+        <div class="actions">
+          @if (role === 'Admin' || role === 'Supervisore') {
+            <button class="btn-primary">+ Aggiungi nuovo</button>
+            <button class="btn-secondary">Esporta</button>
+          }
+        </div>
+      </header>
+
+      <div class="inventory-table">
+        <table>
+          <thead>
+          <tr>
+            <th>Nome prodotto</th>
+            <th>Categoria</th>
+            <th>Quantità</th>
+            <th>Prezzo</th>
+            <th>Stato</th>
+            <th>Operazioni</th>
+          </tr>
+          </thead>
+
+          <tbody>
+            @for (product of products; track product._id) {
+              <tr>
+                <td>{{ product.name }}</td>
+                <td>{{ product.category }}</td>
+
+                <td>
+                  @if (role === 'User' || role === 'Admin' || role === 'Supervisore') {
+                    <input
+                      type="number"
+                      [(ngModel)]="product.quantity"
+                      [readonly]="role === 'User'"
+                      min="0"
+                    />
+                  }
+                </td>
+
+                <td>
+                  @if (role !== 'User') {
+                    <input
+                      type="number"
+                      [(ngModel)]="product.price"
+                      step="0.01"
+                    />
+                  } @else {
+                    <span>€{{ product.price }}</span>
+                  }
+                </td>
+
+                <td>
+                  @if (role !== 'User') {
+                    <select [(ngModel)]="product.status">
+                      <option value="Disponibile">Disponibile</option>
+                      <option value="Scorte basse">Scorte basse</option>
+                      <option value="Esaurito">Esaurito</option>
+                    </select>
+                  } @else {
+                    <span>{{ product.status }}</span>
+                  }
+                </td>
+
+                <td>
+                  <button class="btn-primary" (click)="updateProduct(product)">💾 Salva</button>
+                </td>
+              </tr>
+            } @empty {
+              <tr>
+                <td colspan="6">Nessun prodotto disponibile</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </section>
+  }
+</div>

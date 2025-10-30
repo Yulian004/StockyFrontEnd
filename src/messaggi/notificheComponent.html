@@ -1,0 +1,61 @@
+<app-navbar [role]="role"></app-navbar>
+
+<section class="notifications-page">
+  <header>
+    <h2>Notifiche</h2>
+    <p class="subtitle">Qui potrai visualizzare tutti gli avvisi e aggiornamenti del sistema.</p>
+  </header>
+
+  <!-- CONTENUTO IN BASE AL RUOLO -->
+  @if (role === 'Admin') {
+    <div class="notifications-list">
+      <article class="notification admin">
+        <h3>🔧 Notifica amministrativa</h3>
+        <p>Gestisci gli utenti e verifica lo stato dei server.</p>
+        <small>Oggi • 09:12</small>
+      </article>
+
+      <article class="notification">
+        <h3>🧾 Log di sistema aggiornato</h3>
+        <p>È stato completato un backup automatico.</p>
+        <small>Ieri • 22:47</small>
+      </article>
+    </div>
+  }
+
+  @else if (role === 'Supervisore') {
+    <div class="notifications-list">
+      <article class="notification supervisore">
+        <h3>📦 Controllo prodotti</h3>
+        <p>Alcuni articoli richiedono revisione manuale.</p>
+        <small>Oggi • 10:03</small>
+      </article>
+
+      <article class="notification">
+        <h3>📈 Report aggiornato</h3>
+        <p>Le vendite settimanali sono aumentate del 7%.</p>
+        <small>Ieri • 16:28</small>
+      </article>
+    </div>
+  }
+
+  @else if (role === 'User') {
+    <div class="notifications-list">
+      <article class="notification user">
+        <h3>🎁 Nuova promozione disponibile</h3>
+        <p>Approfitta degli sconti esclusivi per gli utenti registrati!</p>
+        <small>Oggi • 11:15</small>
+      </article>
+
+      <article class="notification">
+        <h3>📬 Messaggio dal supporto</h3>
+        <p>Il tuo ticket è stato aggiornato.</p>
+        <small>Ieri • 18:20</small>
+      </article>
+    </div>
+  }
+
+  @else {
+    <p>Nessun ruolo riconosciuto. Non ci sono notifiche da mostrare.</p>
+  }
+</section>

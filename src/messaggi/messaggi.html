@@ -1,0 +1,94 @@
+<app-navbar [role]="role"></app-navbar>
+
+@if (showNewMessageModal) {
+  <app-nuovo-messaggio (closeModal)="closeNewMessageModal()"></app-nuovo-messaggio>
+}
+
+<section class="messages-page">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <button class="compose-btn" (click)="openNewMessage()">+ Nuovo Messaggio</button>
+    <ul class="menu">
+      <li (click)="setView('notifications')" [class.active]="view === 'notifications'">Notifiche</li>
+      <li (click)="setView('inbox')" [class.active]="view === 'inbox'">Posta in arrivo</li>
+      <li>Inviati</li>
+      <li>Bozze</li>
+      <li>Spam</li>
+      <li>Cestino</li>
+    </ul>
+  </aside>
+
+  <!-- Contenuto principale -->
+  <main class="message-list" [style.grid-column]="view === 'notifications' ? '2 / 4' : '2 / 3'">
+    <header class="list-header">
+      @if (view === 'inbox') {
+        <h2>Posta in arrivo</h2>
+        <input type="text" placeholder="Cerca nei messaggi..." />
+      } @else if (view === 'notifications') {
+        <h2>Notifiche</h2>
+      }
+    </header>
+
+    <!-- MESSAGGI PERSONALIZZATI IN BASE AL RUOLO -->
+    @if (role === 'Admin') {
+      <p class="role-info">📩 Sei un <strong>Amministratore</strong>: ricevi messaggi di sistema e richieste di utenti.</p>
+    } @else if (role === 'Supervisore') {
+      <p class="role-info">📨 Sei un <strong>Supervisore</strong>: ricevi messaggi di controllo attività e stato prodotti.</p>
+    } @else if (role === 'User') {
+      <p class="role-info">💬 Sei un <strong>Utente</strong>: ricevi messaggi informativi e risposte dal supporto.</p>
+    }
+
+    <!-- Lista messaggi -->
+    @if (view === 'inbox') {
+      <ul class="messages">
+        @for (msg of messages; track msg) {
+          <li
+            class="message"
+            [class.unread]="msg.unread"
+            (click)="selectMessage(msg)">
+            <div class="sender">{{ msg.sender }}</div>
+            <div class="subject">{{ msg.subject }}</div>
+            <div class="time">{{ msg.time }}</div>
+          </li>
+        }
+      </ul>
+    }
+
+    <!-- Filtro notifiche -->
+    @if (view === 'notifications') {
+      <div class="notif-filter">
+        <button [class.active]="notifFilter === 'all'" (click)="setFilter('all')">Tutte</button>
+        <button [class.active]="notifFilter === 'unread'" (click)="setFilter('unread')">Non lette</button>
+        <button [class.active]="notifFilter === 'read'" (click)="setFilter('read')">Lette</button>
+      </div>
+
+      <ul class="messages">
+        @for (notif of filteredNotifications; track notif) {
+          <li class="message" [class.unread]="!notif.read">
+            <div class="sender">{{ notif.title }}</div>
+            <div class="subject">{{ notif.description }}</div>
+            <div class="time">{{ notif.time }}</div>
+            <button class="read-toggle" (click)="toggleRead(notif)">
+              {{ notif.read ? '✔️' : '❗' }}
+            </button>
+          </li>
+        }
+      </ul>
+    }
+  </main>
+
+  <!-- Anteprima messaggio -->
+  @if (view === 'inbox' && selectedMessage) {
+    <aside class="message-preview">
+      <header>
+        <h3>{{ selectedMessage.subject }}</h3>
+        <span class="from">Da: {{ selectedMessage.sender }}</span>
+        <span class="date">{{ selectedMessage.time }}</span>
+      </header>
+
+      <div class="content">
+        <p>{{ selectedMessage.content }}</p>
+      </div>
+    </aside>
+  }
+</section>

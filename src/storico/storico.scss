@@ -1,0 +1,231 @@
+/* ===== HISTORY PAGE ===== */
+:host {
+  display: block;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #00b4d8, #0077b6);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #fff;
+  padding: 2rem 1rem;
+}
+
+/* ===== CONTAINER ===== */
+.history-page {
+  max-width: 900px;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+  padding: 2rem 2.5rem;
+  animation: fadeInUp 0.8s ease;
+}
+
+/* ===== HEADER ===== */
+.history-item .item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 8px;
+  padding-right: 110px;
+}
+
+.history-header h2 {
+  margin: 0;
+  font-size: 2rem;
+  color: #caf0f8;
+  text-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+  font-weight: 700;
+  animation: fadeInDown 0.8s ease;
+}
+
+.history-header .subtitle {
+  color: #dff;
+  font-size: 1rem;
+  opacity: 0.9;
+}
+
+/* ===== FILTRI ===== */
+.history-header .filters {
+  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.history-header .filters select {
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: none;
+  font-size: 0.9rem;
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.history-header .filters select:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.history-header .filters .btn-secondary {
+  background: rgba(255, 255, 255, 0.25);
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.history-header .filters .btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.4);
+  transform: translateY(-2px);
+}
+
+/* ===== LISTA ===== */
+.history-list {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ===== ELEMENTI ===== */
+.history-item {
+  position: relative;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  transition: all 0.3s ease;
+  animation: fadeInUp 0.8s ease;
+  overflow: hidden;
+}
+
+.history-item:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.3);
+}
+
+/* ===== ITEM HEADER ===== */
+.history-item .item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.history-item .item-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #90e0ef;
+  font-weight: 600;
+}
+
+.history-item .item-header .date {
+  color: #caf0f8;
+  font-size: 0.85rem;
+  opacity: 0.85;
+}
+
+/* ===== TESTO ===== */
+.history-item p {
+  margin: 0 0 8px 0;
+  color: #f8f9fa;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  opacity: 0.95;
+}
+
+/* ===== TAG ===== */
+.history-item .tag {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: 6px;
+  color: #fff;
+  text-transform: uppercase;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  letter-spacing: 0.5px;
+  z-index: 2;
+}
+
+.history-item .tag.success {
+  background: #43a047;
+}
+
+.history-item .tag.info {
+  background: #00b4d8;
+}
+
+.history-item .tag.danger {
+  background: #e53935;
+}
+
+/* ===== ANIMAZIONI ===== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 600px) {
+  .history-page {
+    padding: 1.5rem;
+  }
+
+  .history-header h2 {
+    font-size: 1.6rem;
+  }
+
+  .history-item {
+    padding: 14px;
+  }
+}
+.history-page {
+  margin-top: 80px;
+}
+
+.history-header .filters select {
+  color: #000000;
+}
+
+.history-header .filters select option {
+  color: #000000;
+}
+.nab
+{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  margin: 0;
+  border: none;
+}

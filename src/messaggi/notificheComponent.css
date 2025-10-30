@@ -1,0 +1,72 @@
+.notifications-page {
+  padding: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #00b4d8, #0077b6);
+  min-height: 100vh;
+  color: #fff;
+  text-align: center;
+  animation: fadeInUp 0.8s ease;
+}
+
+.notifications-page header {
+  margin-bottom: 2rem;
+}
+
+.notifications-page h2 {
+  font-size: 2rem;
+  color: #caf0f8;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.notifications-page .subtitle {
+  font-size: 1rem;
+  color: #dff;
+}
+
+.notifications-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.notification {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  padding: 1.2rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(8px);
+  transition: all 0.3s ease;
+  text-align: left;
+}
+
+.notification:hover {
+  transform: translateY(-4px);
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.notification h3 {
+  font-size: 1.3rem;
+  color: #90e0ef;
+  margin-bottom: 0.5rem;
+}
+
+.notification p {
+  color: #e0f7fa;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.notification small {
+  display: block;
+  margin-top: 0.5rem;
+  color: #bbdefb;
+  font-size: 0.85rem;
+}
+
+/* Animazioni */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}

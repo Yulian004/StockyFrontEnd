@@ -1,0 +1,210 @@
+/* ===== DASHBOARD PAGE ===== */
+.dashboard-container {
+  background: linear-gradient(135deg, #00b4d8, #0077b6);
+  min-height: 100vh;
+  padding: 3rem 2rem;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.dashboard-container h2 {
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: #caf0f8;
+  text-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+  margin-bottom: 2rem;
+  letter-spacing: 0.5px;
+  animation: fadeInDown 0.8s ease;
+}
+
+section {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(8px);
+  border-radius: 16px;
+  padding: 2rem 2.5rem;
+  max-width: 900px;
+  width: 95%;
+  margin: 1.5rem auto;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+  animation: fadeInUp 0.8s ease;
+}
+
+section:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+  background: rgba(255, 255, 255, 0.18);
+}
+
+section h3 {
+  color: #90e0ef;
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+
+section p {
+  color: #f8f9fa;
+  font-size: 1.1rem;
+  line-height: 1.5;
+  opacity: 0.9;
+}
+
+/* ===== INVENTORY SECTION ===== */
+.inventory-page {
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  color: #fff;
+}
+
+.inventory-header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.inventory-header h2 {
+  font-size: 1.8rem;
+  margin: 0;
+  color: #caf0f8;
+}
+
+.subtitle {
+  color: #dff;
+  font-size: 0.95rem;
+}
+
+.actions {
+  margin-top: 12px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.btn-primary,
+.btn-secondary {
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  font-weight: 600;
+}
+
+.btn-primary {
+  background: #00b4d8;
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: #0096c7;
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.3);
+  color: #fff;
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* Tabella */
+.inventory-table {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  overflow-x: auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  color: #fff;
+}
+
+thead {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+th {
+  text-align: left;
+  padding: 12px;
+  font-weight: 600;
+  color: #caf0f8;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+td {
+  padding: 12px;
+  color: #e0f7fa;
+  font-size: 0.95rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+tr:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.status {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: #fff;
+}
+
+.status.in-stock {
+  background: #43a047;
+}
+
+.status.low-stock {
+  background: #f9a825;
+}
+
+.status.out-stock {
+  background: #e53935;
+}
+
+/* ===== Logout Button ===== */
+button {
+  margin-top: 2rem;
+  background: #00b4d8;
+  color: #fff;
+  border: none;
+  padding: 0.8rem 2rem;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+button:hover {
+  background: #0096c7;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* Animazioni */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
