@@ -29,25 +29,25 @@
     </header>
 
     <div class="history-list">
-      @for (op of filteredOperations; track op._id) {
+      @for (op of filteredOperations; track op.id) {
         <article class="history-item">
           <div class="item-header">
-            <h3>{{ op.action }} - {{ op.product }}</h3>
-            <span class="date">{{ op.timestamp | date:'dd MMM yyyy - HH:mm' }}</span>
+            <h3>{{ op.type | typeLabel }} - {{ op.product }}</h3>
+            <span class="date">{{ op.time | date:'dd MMM yyyy - HH:mm' }}</span>
           </div>
           <p>
-            Eseguito da <strong>{{ op.user }}</strong> — Quantità: {{ op.quantity }}
+            Eseguito da <strong>{{ op.user }}</strong> — Quantità: {{ op.quantityChange }}
           </p>
-          <span
-            class="tag"
-            [ngClass]="{
-              'success': op.status === 'Completato',
-              'info': op.status === 'Inventario',
-              'danger': op.status === 'Errore'
-            }"
-          >
-            {{ op.status }}
-          </span>
+<!--          <span-->
+<!--            class="tag"-->
+<!--            [ngClass]="{-->
+<!--              'success': op.status === 'Completato',-->
+<!--              'info': op.status === 'Inventario',-->
+<!--              'danger': op.status === 'Errore'-->
+<!--            }"-->
+<!--          >-->
+<!--            {{ op.status }}-->
+<!--          </span>-->
         </article>
       }
 

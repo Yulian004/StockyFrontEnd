@@ -34,29 +34,30 @@ export class RegisterComponent {
 
   // Register form
   registerForm = new FormGroup({
-    nome: new FormControl('', Validators.required),
-    cognome: new FormControl('', Validators.required),
+    name: new FormControl('', Validators.required),
+    surname: new FormControl('', Validators.required),
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [
       Validators.required,
       Validators.minLength(8),
       Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&.,;]{8,}$')
     ]),
-    ruolo: new FormControl('', Validators.required)
+    role: new FormControl('', Validators.required)
   });
 
   // Edit form
   editForm = new FormGroup({
-    nome: new FormControl('', Validators.required),
-    cognome: new FormControl('', Validators.required),
+    id : new FormControl<String | null>(null),
+    name: new FormControl('', Validators.required),
+    surname: new FormControl('', Validators.required),
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl(''), // opzionale
-    ruolo: new FormControl('STANDARD', Validators.required)
+    role: new FormControl('STANDARD', Validators.required)
   });
 
   // ricerca/modifica
   searchEmail: string = '';
-  editingUser: any = null; // conterrà l'utente caricato { _id, nome, cognome, email, ruolo, roles }
+  editingUser: any = null; // conterrà l'utente caricato { id, nome, cognome, email, ruolo, roles }
 
   private API = '/api/admin/';
 
@@ -82,11 +83,11 @@ export class RegisterComponent {
     this.isRegistering = true;
     const v = this.registerForm.value;
     const payload: UserPayload = {
-      name: v.nome!,
-      surname: v.cognome!,
+      name: v.name!,
+      surname: v.surname!,
       email: v.email!,
       password: v.password!,
-      role: v.ruolo!
+      role: v.role!
     };
 
     this.http.post('/api/admin/create', payload).subscribe({
@@ -111,7 +112,7 @@ export class RegisterComponent {
     this.errorMessage = null;
     if (!this.searchEmail) return;
 
-    this.http.get<any>(`${this.API}?email=${encodeURIComponent(this.searchEmail)}`).subscribe({
+    this.http.get<any>(`${this.API}find?email=${encodeURIComponent(this.searchEmail)}`).subscribe({
       next: (u) => {
         if (!u) {
           this.errorMessage = 'Utente non trovato';
@@ -121,11 +122,12 @@ export class RegisterComponent {
         this.editingUser = u;
         // Butta nella form (password vuota: cambia solo se inserita)
         this.editForm.setValue({
-          nome: u.nome || '',
-          cognome: u.cognome || '',
+          id : (u.id ?? u._id) || null,
+          name: u.name || '',
+          surname: u.surname || '',
           email: u.email || '',
           password: '',
-          ruolo: (u.roles && u.roles.includes('ADMIN'))
+          role: (u.roles && u.roles.includes('ADMIN'))
             ? 'ADMIN'
             : (u.roles && u.roles.includes('SUPERUSER'))
               ? 'SUPERUSER'
@@ -156,21 +158,22 @@ export class RegisterComponent {
     const v = this.editForm.value;
     // Prepariamo payload per aggiornamento; se password vuota -> non la inviamo
     const updatePayload: any = {
-      nome: v.nome!,
-      cognome: v.cognome!,
+      name: v.name!,
+      surname: v.surname!,
       email: v.email!,
-      ruolo: v.ruolo!
+      role: v.role!
     };
     if (v.password && v.password.trim().length > 0) {
       updatePayload.password = v.password;
     }
-
+      console.log(updatePayload)
     // endpoint PUT da /api/modify
-    const id = this.editingUser._id;
-    this.http.put<{ message?: string }>('/api/admin/modify', updatePayload).subscribe({
+    const id = this.editingUser.id ?? this.editingUser.id;
+    const url = `${this.API}modify?id=${encodeURIComponent(id)}`;
+    this.http.put(url , updatePayload).subscribe({
       next: (res) => {
         this.isSavingEdit = false;
-        this.successMessage = res.message || 'Utente aggiornato con successo';
+        this.successMessage =  'Utente aggiornato con successo';
         // aggiorna local copy
         this.editingUser = { ...this.editingUser, ...updatePayload };
         this.editForm.get('password')?.setValue('');

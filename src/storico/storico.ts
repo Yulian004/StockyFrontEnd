@@ -3,25 +3,28 @@ import { NavbarComponent } from '../parts/navbar/navbar';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import {TypeLabelPipe} from './type-label.pipe';
 
 interface Operation {
-  _id: string;
+  id: string;
   user: string;
-  action: string;
+  type: string;
   product: string;
-  quantity: number;
-  timestamp: string;
-  status: string;
+  quantityChange: number;
+  time: string;
+  // status: string;
 }
+
 
 @Component({
   selector: 'app-storico',
   standalone: true,
-  imports: [NavbarComponent, CommonModule, FormsModule],
+  imports: [NavbarComponent, CommonModule, FormsModule, TypeLabelPipe],
   templateUrl: './storico.html',
   styleUrls: ['./storico.scss']
 })
 export class Storico implements OnInit {
+
   role: string = '';
   operations: Operation[] = [];
   filteredOperations: Operation[] = [];
@@ -31,9 +34,10 @@ export class Storico implements OnInit {
   startDate: string = '';
   endDate: string = '';
 
-  private readonly API = 'api/superuser';
+  private readonly API = '/api/superuser';
 
   constructor(private http: HttpClient) {}
+
 
   ngOnInit(): void {
     this.role = localStorage.getItem('userRole') || 'STANDARD';
@@ -44,7 +48,7 @@ export class Storico implements OnInit {
 
   // 🔹 Carica tutto lo storico all'avvio
   loadOperations() {
-    this.http.get<Operation[]>('${this.API}/alloperation').subscribe({
+    this.http.get<Operation[]>('/api/superuser/alloperations').subscribe({
       next: (data) => {
         this.operations = data;
         this.filteredOperations = data;
