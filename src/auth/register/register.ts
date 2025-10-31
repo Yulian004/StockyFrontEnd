@@ -6,11 +6,11 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { NavbarComponent } from '../../parts/navbar/navbar';
 
 interface UserPayload {
-  nome: string;
-  cognome: string;
+  name: string;
+  surname: string;
   email: string;
   password?: string;
-  ruolo: string; // 'User' | 'Supervisore' | 'Admin'
+  role: string; // 'User' | 'Supervisore' | 'Admin'
 }
 
 @Component({
@@ -51,20 +51,20 @@ export class RegisterComponent {
     cognome: new FormControl('', Validators.required),
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl(''), // opzionale
-    ruolo: new FormControl('User', Validators.required)
+    ruolo: new FormControl('STANDARD', Validators.required)
   });
 
   // ricerca/modifica
   searchEmail: string = '';
   editingUser: any = null; // conterrà l'utente caricato { _id, nome, cognome, email, ruolo, roles }
 
-  private API = '/api/admin';
+  private API = '/api/admin/';
 
   constructor(private http: HttpClient) {
     this.role = localStorage.getItem('userRole') || '';
 
     // Se Admin, carica tutti gli utenti
-    if (this.role === 'Admin') {
+    if (this.role === 'ADMIN') {
       this.loadAllUsers();
     }
   }
@@ -82,21 +82,21 @@ export class RegisterComponent {
     this.isRegistering = true;
     const v = this.registerForm.value;
     const payload: UserPayload = {
-      nome: v.nome!,
-      cognome: v.cognome!,
+      name: v.nome!,
+      surname: v.cognome!,
       email: v.email!,
       password: v.password!,
-      ruolo: v.ruolo!
+      role: v.ruolo!
     };
 
-    this.http.post<{ message: string }>('/api/admin/create', payload).subscribe({
-      next: (res) => {
+    this.http.post('/api/admin/create', payload).subscribe({
+      next: () => {
         this.isRegistering = false;
-        this.successMessage = res.message || 'Utente registrato con successo';
+        this.successMessage = 'Utente registrato con successo';
         this.registerForm.reset();
 
         // aggiorna lista se admin
-        if (this.role === 'Admin') this.loadAllUsers();
+        if (this.role === 'ADMIN') this.loadAllUsers();
       },
       error: (err: HttpErrorResponse) => {
         this.isRegistering = false;
@@ -125,11 +125,11 @@ export class RegisterComponent {
           cognome: u.cognome || '',
           email: u.email || '',
           password: '',
-          ruolo: (u.roles && u.roles.includes('Admin'))
-            ? 'Admin'
-            : (u.roles && u.roles.includes('Supervisore'))
-              ? 'Supervisore'
-              : 'User'
+          ruolo: (u.roles && u.roles.includes('ADMIN'))
+            ? 'ADMIN'
+            : (u.roles && u.roles.includes('SUPERUSER'))
+              ? 'SUPERUSER'
+              : 'STANDARD'
         });
       },
       error: (err) => {
@@ -176,7 +176,7 @@ export class RegisterComponent {
         this.editForm.get('password')?.setValue('');
 
         // aggiorna lista se admin
-        if (this.role === 'Admin') this.loadAllUsers();
+        if (this.role === 'ADMIN') this.loadAllUsers();
       },
       error: (err) => {
         this.isSavingEdit = false;

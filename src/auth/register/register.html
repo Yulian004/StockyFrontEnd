@@ -71,9 +71,9 @@
             <label for="ruolo">Ruolo:</label>
             <select id="ruolo" formControlName="ruolo">
               <option value="" disabled selected>Seleziona un ruolo</option>
-              <option value="User">Utente</option>
-              <option value="Supervisore">Supervisore</option>
-              <option value="Admin">Admin</option>
+              <option value="STANDARD">Utente</option>
+              <option value="SUPERUSER">Supervisore</option>
+              <option value="ADMIN">Admin</option>
             </select>
             @if (registerForm.get('ruolo')?.invalid && (registerForm.get('ruolo')?.dirty || registerForm.get('ruolo')?.touched)) {
               <div><small>Il ruolo è obbligatorio.</small></div>
@@ -121,9 +121,9 @@
             <div>
               <label for="editRuolo">Ruolo:</label>
               <select id="editRuolo" formControlName="ruolo">
-                <option value="User">Utente</option>
-                <option value="Supervisore">Supervisore</option>
-                <option value="Admin">Admin</option>
+                <option value="STANDARD">Utente</option>
+                <option value="SUPERUSER">Supervisore</option>
+                <option value="ADMIN">Admin</option>
               </select>
             </div>
 
@@ -136,7 +136,7 @@
       </section>
     </div>
     <!-- ===== LISTA UTENTI (solo Admin) ===== -->
-    @if (role === 'Admin') {
+    @if (role === 'ADMIN') {
       <section class="user-list-card">
         <h3>Lista Utenti</h3>
 
@@ -150,8 +150,8 @@
           } @else {
             @for (u of usersList; track u.email) {
               <div class="user-item">
-                <p><strong>{{ u.nome }} {{ u.cognome }}</strong> — {{ u.email }}</p>
-                <span class="role-tag">{{ u.ruolo }}</span>
+                <p><strong>{{ u.name }} {{ u.surname }}</strong> — {{ u.email }}</p>
+                <span class="role-tag">{{ u.role }}</span>
               </div>
             }
           }

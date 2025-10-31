@@ -34,8 +34,8 @@ export class NavbarComponent implements OnInit {
   constructor(private router: Router) {}
 
   logout() {
-    localStorage.removeItem('userRole');
-    localStorage.removeItem('token');
+    localStorage.clear();
+    document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
     this.router.navigate(['/login']);
   }
 }

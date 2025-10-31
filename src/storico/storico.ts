@@ -36,8 +36,8 @@ export class Storico implements OnInit {
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.role = localStorage.getItem('userRole') || 'User';
-    if (this.role === 'Admin' || this.role === 'Supervisore') {
+    this.role = localStorage.getItem('userRole') || 'STANDARD';
+    if (this.role === 'ADMIN' || this.role === 'SUPERUSER') {
       this.loadOperations();
     }
   }

@@ -67,7 +67,7 @@ export class DashboardComponent implements OnInit {
 
   // SUPERVISORE - Modifica
   updateProduct(product: Product) {
-    this.http.post(`/api/superuser//update`, product).subscribe({
+    this.http.post(`/api/superuser/update`, product).subscribe({
       next: () => alert('Prodotto modificato con successo'),
       error: () => alert('Errore modifica prodotto')
     });

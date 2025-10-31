@@ -32,7 +32,7 @@ export class LoginComponent {
     }
 
     const loginData = {
-      user: this.user,
+      email: this.user,
       password: this.password
     };
 
@@ -52,7 +52,7 @@ export class LoginComponent {
 
                 // localStorage.setItem('token', token); // **
 
-                alert('Login effettuato con successo ✅');
+
                 this.router.navigate(['/dashboard']);
 
                 this.loading = false;
