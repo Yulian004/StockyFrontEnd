@@ -39,19 +39,33 @@ export class LoginComponent {
     // Roba Backend
     this.http.post('api/login', loginData)
       .subscribe({
-        next: (response: any) => {
+        next: () => {
+
+          this.http.get("api/userinformation").subscribe(
+            {
+              next: (response: any)=>
+              {
+                const role = response.role;
+                let user = response;
+                // Salva ruolo e token
+                localStorage.setItem('userRole', role);
+
+                // localStorage.setItem('token', token); // **
+
+                alert('Login effettuato con successo ✅');
+                this.router.navigate(['/dashboard']);
+
+                this.loading = false;
+              },
+              error: (err) => {
+                this.errorMessage = 'Accesso scaduto.';
+                this.loading = false;
+              }
+            }
+
+          )
           // Controlla il ruolo restituito dal backend
-          const role = response.role;
-          const token = response.token; // **
 
-          // Salva ruolo e token
-          localStorage.setItem('userRole', role);
-          localStorage.setItem('token', token); // **
-
-          alert('Login effettuato con successo ✅');
-          this.router.navigate(['/dashboard']);
-
-          this.loading = false;
         },
         error: (err) => {
           this.errorMessage = 'Credenziali non valide.';

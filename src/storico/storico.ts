@@ -31,7 +31,7 @@ export class Storico implements OnInit {
   startDate: string = '';
   endDate: string = '';
 
-  private readonly API = 'api/storico';
+  private readonly API = 'api/superuser';
 
   constructor(private http: HttpClient) {}
 
@@ -44,7 +44,7 @@ export class Storico implements OnInit {
 
   // 🔹 Carica tutto lo storico all'avvio
   loadOperations() {
-    this.http.get<Operation[]>(this.API).subscribe({
+    this.http.get<Operation[]>('${this.API}/alloperation').subscribe({
       next: (data) => {
         this.operations = data;
         this.filteredOperations = data;
@@ -62,14 +62,15 @@ export class Storico implements OnInit {
     }
 
     const params: any = {
-      start: this.startDate,
-      end: this.endDate
+     day: this.startDate,
+      from: '00:00:00',
+      to: '23:59:59'
     };
     if (this.selectedUser !== 'Tutti') {
       params.user = this.selectedUser;
     }
 
-    this.http.get<Operation[]>(`${this.API}/range`, { params }).subscribe({
+    this.http.get<Operation[]>(`${this.API}/operationtime`, { params }).subscribe({
       next: (data) => {
         this.filteredOperations = data;
       },

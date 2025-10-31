@@ -58,7 +58,7 @@ export class RegisterComponent {
   searchEmail: string = '';
   editingUser: any = null; // conterrà l'utente caricato { _id, nome, cognome, email, ruolo, roles }
 
-  private API = 'api/admin';
+  private API = '/api/admin';
 
   constructor(private http: HttpClient) {
     this.role = localStorage.getItem('userRole') || '';
@@ -89,7 +89,7 @@ export class RegisterComponent {
       ruolo: v.ruolo!
     };
 
-    this.http.post<{ message: string }>('/api/create', payload).subscribe({
+    this.http.post<{ message: string }>('/api/admin/create', payload).subscribe({
       next: (res) => {
         this.isRegistering = false;
         this.successMessage = res.message || 'Utente registrato con successo';
@@ -167,7 +167,7 @@ export class RegisterComponent {
 
     // endpoint PUT da /api/modify
     const id = this.editingUser._id;
-    this.http.put<{ message?: string }>('api/modify', updatePayload).subscribe({
+    this.http.put<{ message?: string }>('/api/admin/modify', updatePayload).subscribe({
       next: (res) => {
         this.isSavingEdit = false;
         this.successMessage = res.message || 'Utente aggiornato con successo';
@@ -198,7 +198,7 @@ export class RegisterComponent {
     this.isLoadingUsers = true;
     this.loadUsersError = null;
 
-    this.http.get<any[]>('/api/users').subscribe({
+    this.http.get<any[]>('/api/admin/userlist').subscribe({
       next: (users) => {
         this.isLoadingUsers = false;
         this.usersList = users;
