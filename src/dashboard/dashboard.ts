@@ -46,7 +46,7 @@ export class DashboardComponent implements OnInit {
   }
 
   loadProducts() {
-    this.http.get<Product[]>(this.API).subscribe({
+    this.http.get<Product[]>('/api/products').subscribe({
       next: (data) => (this.products = data),
       error: (err) => console.error('Errore nel caricamento prodotti', err)
     });
@@ -54,7 +54,7 @@ export class DashboardComponent implements OnInit {
 
   // SUPERVISORE - Aggiunta
   addProduct() {
-    this.http.post<Product>(`${this.API}/create`, this.newProduct).subscribe({
+    this.http.post<Product>(`/api/superuser/create`, this.newProduct).subscribe({
       next: (res) => {
         alert('Prodotto aggiunto con successo');
         this.products.push(res);
@@ -67,7 +67,7 @@ export class DashboardComponent implements OnInit {
 
   // SUPERVISORE - Modifica
   updateProduct(product: Product) {
-    this.http.post(`${this.API}/update`, product).subscribe({
+    this.http.post(`/api/superuser/update`, product).subscribe({
       next: () => alert('Prodotto modificato con successo'),
       error: () => alert('Errore modifica prodotto')
     });
@@ -78,7 +78,7 @@ export class DashboardComponent implements OnInit {
     if (!id) return;
     if (!confirm('Sei sicuro di voler eliminare questo prodotto?')) return;
 
-    this.http.post(`${this.API}/delete`, { id }).subscribe({
+    this.http.post(`/api/superuser/delete`, { id }).subscribe({
       next: () => {
         alert('Prodotto eliminato');
         this.products = this.products.filter(p => p._id !== id);
@@ -95,7 +95,7 @@ export class DashboardComponent implements OnInit {
       keyword: 'acquisto'
     };
 
-    this.http.post(`${this.API}/add`, payload).subscribe({
+    this.http.post(`/api/add`, payload).subscribe({
       next: () => alert('Quantità aggiunta con successo (Acquisto registrato)'),
       error: () => alert('Errore durante aggiunta quantità')
     });
@@ -108,14 +108,14 @@ export class DashboardComponent implements OnInit {
       keyword: 'vendita'
     };
 
-    this.http.post(`${this.API}/sub`, payload).subscribe({
+    this.http.post(`/api/sub`, payload).subscribe({
       next: () => alert('Quantità ridotta con successo (Vendita registrata)'),
       error: () => alert('Errore durante riduzione quantità')
     });
   }
 
   adjustQuantity(product: Product) {
-    this.http.post(`${this.API}/adjustment`, { id: product._id, quantity: product.quantity }).subscribe({
+    this.http.post(`/api/adjustment`, { id: product._id, quantity: product.quantity }).subscribe({
       next: () => alert('Quantità modificata con successo'),
       error: () => alert('Errore modifica quantità')
     });

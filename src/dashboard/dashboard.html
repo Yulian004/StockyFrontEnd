@@ -4,17 +4,17 @@
   <h2>Benvenuto in Stocky!</h2>
 
   <!-- Messaggi introduttivi -->
-  @if (role === 'Admin') {
+  @if (role === 'ADMIN') {
     <section>
       <h3>Area Amministratore</h3>
       <p>Puoi gestire utenti, impostazioni e prodotti</p>
     </section>
-  } @else if (role === 'Supervisore') {
+  } @else if (role === 'SUPERUSER') {
     <section>
       <h3>Area Supervisore</h3>
       <p>Puoi aggiungere, modificare o eliminare prodotti</p>
     </section>
-  } @else if (role === 'User') {
+  } @else if (role === 'STANDARD') {
     <section>
       <h3>Area Utente</h3>
       <p>Puoi acquistare, vendere o aggiornare quantità dei prodotti</p>
@@ -28,7 +28,7 @@
       <p class="subtitle">Gestione e visualizzazione dei prodotti</p>
 
       <div class="actions">
-        @if (role === 'Supervisore') {
+        @if (role === 'SUPERUSER') {
           <button class="btn-primary" (click)="showAddForm = !showAddForm">
             {{ showAddForm ? 'Chiudi form' : '+ Aggiungi nuovo' }}
           </button>
@@ -37,7 +37,7 @@
     </header>
 
     <!-- FORM AGGIUNTA PRODOTTO -->
-    @if (showAddForm && role === 'Supervisore') {
+    @if (showAddForm && role === 'SUPERUSER') {
       <div class="add-form">
         <h4>Nuovo prodotto</h4>
         <form (ngSubmit)="addProduct()" #addForm="ngForm">
@@ -73,7 +73,7 @@
           @for (product of products; track product._id) {
             <tr>
               <td>
-                @if (role === 'Supervisore') {
+                @if (role === 'SUPERUSER') {
                   <input [(ngModel)]="product.name" />
                 } @else {
                   {{ product.name }}
@@ -81,7 +81,7 @@
               </td>
 
               <td>
-                @if (role === 'Supervisore') {
+                @if (role === 'SUPERUSER') {
                   <input [(ngModel)]="product.category" />
                 } @else {
                   {{ product.category }}
@@ -93,7 +93,7 @@
               </td>
 
               <td>
-                @if (role === 'Supervisore') {
+                @if (role === 'SUPERUSER') {
                   <input type="number" [(ngModel)]="product.price" step="0.01" />
                 } @else {
                   €{{ product.price }}
@@ -101,7 +101,7 @@
               </td>
 
               <td>
-                @if (role === 'Supervisore') {
+                @if (role === 'SUPERUSER') {
                   <select [(ngModel)]="product.status">
                     <option value="Disponibile">Disponibile</option>
                     <option value="Scorte basse">Scorte basse</option>
@@ -113,10 +113,10 @@
               </td>
 
               <td>
-                @if (role === 'Supervisore') {
+                @if (role === 'SUPERUSER') {
                   <button (click)="updateProduct(product)">💾</button>
                   <button (click)="deleteProduct(product._id)">🗑️</button>
-                } @else if (role === 'User') {
+                } @else if (role === 'STANDARD') {
                   <button (click)="addQuantity(product)">➕ Add</button>
                   <button (click)="subQuantity(product)">➖ Sub</button>
                   <button (click)="adjustQuantity(product)">⚙️ Adj</button>

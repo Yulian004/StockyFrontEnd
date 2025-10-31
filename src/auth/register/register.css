@@ -204,6 +204,7 @@ button:disabled {
   align-items: center;
   padding: 0.4rem 0;
   border-bottom: 1px solid #eee;
+  color: #1a1a1a;
 }
 
 .user-item:last-child {
